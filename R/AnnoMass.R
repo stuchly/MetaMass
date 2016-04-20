@@ -239,7 +239,7 @@ write.cdt<-function(AM,file="results.cdt",annotation=FALSE,rsID=1){
     dd<-merge(AM$annotation$annotation,dd,by.x=AM$annotation$ID,by.y=AM$data$ID)
     ord<-order(dd$ord)
     Annot<-dd[ord,AM$annotation$components.col[rsID]]
-    if (length(grep("category",colnames(AM$data$data)))>0) AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$updated_order,"Annot=",Annot,"Assign=",AM$data$data[,paste("category",rsID,sep="_")]) else AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$updated_order,"Annot=",Annot,"Assign=",AM$data$data[,paste("main_component",rsID,sep="_")])
+    if (length(grep("category",colnames(AM$data$data)))>0) AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Annot=",Annot,"Assign=",AM$data$data[,paste("category",rsID,sep="_")]) else AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Annot=",Annot,"Assign=",AM$data$data[,paste("main_component",rsID,sep="_")])
     data<-AM$data$data
     data.cols<-AM$data$data.cols
     endC<-max(data.cols)
@@ -507,7 +507,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
             try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="category"))
             levelsC<-levelsCo
             try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,Nb_main_component=nbct,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,add2data=FALSE))
             ctexist<-TRUE
         }
     }
