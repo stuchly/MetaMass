@@ -1,0 +1,12 @@
+Package: MetaMass
+Version: 0.1-1
+Date: 2016-01-17
+Title: Tools for Mass Spectrometry data meta-analysis
+Author: Jan Stuchly <jan.stuchly@lfmotol.cuni.cz>, Fridtjof Lund-Johansen <fridtjol@gmail.com>
+Maintainer: Jan Stuchly <jan.stuchly@lfmotol.cuni.cz>
+Depends: R (>= 3.0.0), cluster,amap, clValid, pROC
+Suggests:
+Description:
+License:
+URL: http://clip.lf2.cuni.cz/
+Packaged: 2012-05-01 10:26:23 UTC; stujan
