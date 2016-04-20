@@ -12,7 +12,10 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=1,data.ID=2,ma
     file(s) with MS data. See details.}
 
   \item{Annotation}{data.frame or character of path to the text
-    file with Annotation data. If NULL the AnnotationAM data is used (\code{?AnnotationAM})}
+    file with Annotation data. If NULL the AnnotationAM data is used
+    (\code{?AnnotationAM}). If custom annotation file is used the first
+    column must be uniprot ID.
+  }
 
   \item{Metadata}{character vector, name(s) of MS data present in the
     package see \code{?Metadata}}
