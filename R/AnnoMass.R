@@ -269,7 +269,7 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         if (fulltext){
             Annot_out<-AM$annotation$annotation[,c(colnames(AM$annotation$annotation)[1],AM$annotation$ID,AM$annotation$components.col)]
             data(full_text_annotation,envir =  environment())
-            Annot_out<-merge(Annot_out,full_text_annotation,by.x=1,by.y=1,all.x=TRUE)[,-1]
+            Annot_out<-merge(Annot_out,full_text_annotation[,-2],by.x=1,by.y=1,all.x=TRUE)[,-1]
             AA<<-Annot_out
         } else {
             Annot_out<-AM$annotation$annotation[,c(AM$annotation$ID,AM$annotation$components.col)]
