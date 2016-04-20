@@ -13,9 +13,9 @@ get.data(AM,annotation=TRUE,data.only=FALSE,out=FALSE)
   \item{data.only}{only data (numerical) columns, protein ID and cluster
     membership is returned}
   \item{out}{the table in the same format as in output_table txtx file
-    is returned
+    is returned}
   \item{fulltext}{only with out=TRUE; fullText annoations from
-    data(full_text_annotation) columns are added}}
+    data(full_text_annotation) columns are added}
 }
 
 \value{
