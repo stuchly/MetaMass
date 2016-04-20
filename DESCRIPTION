@@ -4,7 +4,7 @@ Date: 2016-01-17
 Title: Tools for Mass Spectrometry data meta-analysis
 Author: Jan Stuchly <jan.stuchly@lfmotol.cuni.cz>, Fridtjof Lund-Johansen <fridtjol@gmail.com>
 Maintainer: Jan Stuchly <jan.stuchly@lfmotol.cuni.cz>
-Depends: R (>= 3.0.0), cluster,amap, clValid, pROC
+Depends: R (>= 3.0.0), cluster,amap
 Suggests:
 Description:
 License:
