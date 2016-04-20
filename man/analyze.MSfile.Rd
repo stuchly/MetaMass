@@ -111,7 +111,7 @@ res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
 ## crude fractionation
 
 file4<-system.file("extdata",c("Bileck.txt"),package="MetaMass")
-res4<-analyze.MSfile(MSfile=file4,Metadata=c("Christoforou"),output="res3",method="crude",markers=c(3:7),clusters=100)
+res4<-analyze.MSfile(MSfile=file4,Metadata=c("Christoforou"),output="res4",method="crude",markers=c(3:7),clusters=100)
 
 
 }
