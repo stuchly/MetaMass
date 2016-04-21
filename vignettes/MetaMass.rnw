@@ -31,7 +31,7 @@ The presented package provides tools for meta-analysis of human proteome mass sp
 analyzing text files or \texttt{data.frame} with an integration
 with R for further analysis.\\
 \\
-Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and purity scores and ROC curves that provide information about the fit between the dataset and the marker set.\\
+Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and purity scores and precision-recall curves that provide information about the fit between the dataset and the marker set.\\
 \\
 \noindent Required software:
 \begin{itemize}
@@ -118,7 +118,7 @@ R. In this case three files will be created in the working directory.
   \item name\_table.txt - spreadsheet containing the analyzed data and
     all annotations used (see below) for the analysis together the
     cluster assignment and purity with respect to the most abundant component
-    \item name\_roc.pdf - true vs false positivity curves of the
+    \item name\_roc.pdf - precision-recall curves of the
       cluster assignment with respect to all used annotations
       \item name\_javatree.cdt - heatmap to be visualized in the Java
         TreeView application. Each line is annotated by the protein
@@ -302,25 +302,25 @@ example of option we use $480$ cluster.
 res4<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2_4annot",clusters=480,markers=c(3,4,6,7))
 @ %def
 \normalsize
-User can plot the roc curves directly by (figure $1$)
+User can plot the precision-recall curves directly by (figure $1$)
 \scriptsize
 @
 <<eval=false>>=
 par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1)
-plot.rocAM(res4) #plot in  6 rows and 3 columns
+plot.prAM(res4) #plot in  6 rows and 3 columns
 @ %def
 \normalsize
 <<produce-plot, results = hide,echo=false>>=
 pdf('roc1.pdf')
 par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.7)
-plot.rocAM(res4) #plot in 5 rows and 4 columns    # Produces Figure \ref{fig1}
+plot.prAM(res4) #plot in 5 rows and 4 columns    # Produces Figure \ref{fig1}
 dev.off()
 @
 And the heatmaps as seen in the Jva TreeView application are shown in
 the figure $2$
 \begin{figure}[h]
 \includegraphics{roc1.pdf}
-\caption{ROC curves}
+\caption{Precision-recall curves}
 \label{fig1}
 \end{figure}
 

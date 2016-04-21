@@ -208,7 +208,7 @@ run.annotation<-function(AM,method="kmeans",metric="correlation",clusters=60,ite
 
 
         }
-        AM$results$clusters[[i]]$TP.FP<-TP.FP
+        ##AM$results$clusters[[i]]$TP.FP<-TP.FP
         AM$data$data[,paste("main_component",i,sep="_")]<-AM$results$clusters[[i]]$main_component[AM$data$data$clusters]
         AM$data$data[,paste("purity_main_component",i,sep="_")]<-AM$results$clusters[[i]]$purity_main_component[AM$data$data$clusters]
 
@@ -318,7 +318,7 @@ get.components<- function(AM) AM$annotation$components
 
 get.presence<-function(AM) AM$data$present
 
-roc.AM<-function(AM,rID=NULL,component=NULL){
+roc.AM1<-function(AM,rID=NULL,component=NULL){
     if (is.null(rID)) rID<-1:length(AM$annotation$components)
     dd<-get.data(AM)
 
@@ -357,29 +357,85 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
     names(reso)<-c("Annotation","rocAM")
     reso[[1]]<-sub("^Annot_","",AM$annotation$components.col)
     reso[[2]]<-res
-    class(res)<-"rocAM"
+    class(reso)<-"rocAM"
+    return(reso)
+}
+
+roc.AM<-function(AM,rID=NULL,component=NULL){
+    if (is.null(rID)) rID<-1:length(AM$annotation$components)
+    dd<-get.data(AM)
+
+    if (is.null(component)){
+        for (i in 1:length(AM$annotation$components)) {
+            sel<-which(dd[,AM$annotation$components.col[i]] %in% c("LYSOSOME","ENDOSOME"))
+            dd[sel,AM$annotation$components.col[i]]<-"LYSOSOME&ENDOSOME"
+            sel<-which(dd[,AM$annotation$components.col[i]] %in% c("NUCLEOLUS"))
+            dd[sel,AM$annotation$components.col[i]]<-"NUCLEUS"
+        }
+        component<-NULL
+        for (i in 1:length(AM$annotation$components)) component<-unique(c(component,unique(as.character(get.clusters(AM,rID=i)$category))))
+        component<-as.character(na.omit(component))
+
+    }
+    res<-list()[1:length(component)]
+    names(res)<-component
+
+    for (i in component){
+        comList<-list()[1:length(rID)]
+        res[[i]]<-comList
+        for (j in 1:length(rID)){
+            cls<-get.clusters(AM,rID=j)
+            ##sel<-which(dd[,paste("main_component",j,sep="_")]==i)
+
+            sel<-which(dd[,AM$annotation$components.col[j]]==i)
+
+            ## pur<-cls$purity_main_component[dd$clusters[sel]]
+            if (is.null(cls[dd$clusters[sel],"purity_category"])) next else pur<-cls[dd$clusters[sel],"purity_category"]
+            purity<-sort(unique(pur),decreasing=TRUE)
+
+            if (length(purity)>0) loc<-data.frame(purity=purity,ratio=NA) else {
+                                                                              loc<-NULL
+                                                                              next
+                                                                          }
+            N<-length(purity)
+            for (a in 1:N){
+                loc[a,2]<-length(which(pur>=purity[a]))/length(sel)
+
+            }
+            loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=1))
+
+            res[[i]][[j]]<-loc
+        }
+    }
+    reso<-list()[1:2]
+    names(reso)<-c("Annotation","rocAM")
+    reso[[1]]<-sub("^Annot_","",AM$annotation$components.col)
+    reso[[2]]<-res
+    class(reso)<-"rocAM"
     return(reso)
 }
 
 
-plot.rocAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
+
+plot.prAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
     ## par(mfrow=mfrow,mar=mar)
 
-    if (class(rocAM)!="rocAM") {if (class(rocAM)=="AnnoMass") rocAM<-roc.AM(rocAM)} else {stop()}
+    if (class(rocAM)!="rocAM") {if (class(rocAM)=="AnnoMass") rocAM<-roc.AM(rocAM) else stop()}
     annotation<-rocAM[[1]]
     rocAM<-rocAM[[2]]
     for(i in 1:length(rocAM)){
 
         for (jj in 1:(length(rocAM[[i]]))) if (!is.null(rocAM[[i]][[jj]])) break
         if (is.null(rocAM[[i]][[jj]])) next
-        plot(rocAM[[i]][[jj]],type="l",col=jj,lty=jj,xlim=c(1,0),ylim=c(0,1),main=names(rocAM)[i])
+
+        plot(rocAM[[i]][[jj]][,c(2,1)],type="l",col=jj,lty=jj,xlim=c(0,1),ylim=c(0,1),main=names(rocAM)[i],xlab="Recall",ylab="Precision")
         K<-length(rocAM[[i]])
         legend(0.4,0.6,legend=paste(annotation),lty=1:K,col=1:K,cex=0.45)
         if (length(rocAM[[i]])<=jj) next
 
         for (j in (jj+1):length(rocAM[[i]])){
 
-            lines(rocAM[[i]][[j]],col=j,lty=j)
+            lines(rocAM[[i]][[j]][,c(2,1)],col=j,lty=j)
 
         }
     }
@@ -506,8 +562,8 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
             ss<-which(levelsC %in% res$results$clusters[[i]][,"category"])
             try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="category"))
             levelsC<-levelsCo
-            try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,add2data=FALSE))
+            ##try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_category=nbct,purity_category=nbct/cls$Nb_of_annotations,add2data=FALSE))
             ctexist<-TRUE
         }
     }
@@ -517,7 +573,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
 
 
 
-    if (ctexist) ord<-order(cls$category,-cls$Nb_main_component, -cls$purity_main_component) else ord<-order(cls$main_component,-cls$purity_main_component)
+    if (ctexist) ord<-order(cls$category,-cls$Nb_category, -cls$purity_category) else ord<-order(cls$main_component,-cls$Nb_main_component, -cls$purity_main_component)
     res<-order.AM(res,ordering=ord)
     data<-get.data(res)
     ord<-order(data$updated_order)
@@ -533,7 +589,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
 
         pdf(output.roc)
         par(mfrow=c(2,2),cex=0.5)
-        plot.rocAM(res)
+        plot.prAM(res)
         dev.off()
 
     }
@@ -575,9 +631,9 @@ categorize_cluster<-function(cls){
                                               counts[i]<-Nb*cls$RIBOSOME_ratio[i]
                                               next
                                           }
-        if ((cls$CYTOSOL_ratio[i]+cls$CS_ratio[i]+cls$PROTEASOME_ratio[i])>=0.51){
+        if ((cls$CYTOSOL_ratio[i]+cls$CS_ratio[i])>=0.51){
             if (cls$CS_ratio[i]>0.3) res[i]<-"CS" else res[i]<-"CYTOSOL"
-            counts[i]<-Nb*(cls$CYTOSOL_ratio[i]+cls$CS_ratio[i]+cls$PROTEASOME_ratio[i])
+            counts[i]<-Nb*(cls$CYTOSOL_ratio[i]+cls$CS_ratio[i])
             next
         }
         if ((cls$PM_ratio[i]+cls$ER_ratio[i]+cls$GOLGI_ratio[i]+cls$MITOCHONDRION_ratio[i]+cls$LYSOSOME_ratio[i]+cls$ENDOSOME_ratio[i])>=0.51){
@@ -589,8 +645,12 @@ categorize_cluster<-function(cls){
             rr<-c(PM=cls$PM_ratio[i],ER=cls$ER_ratio[i],GOLGI=cls$GOLGI_ratio[i],MITOCHONDRION=cls$MITOCHONDRION_ratio[i],LYSOSOME=cls$LYSOSOME_ratio[i],ENDOSOME=cls$ENDOSOME_ratio[i])
 
             res[i]<-names(rr)[which.max(rr)[1]]
-            if (res[i] %in% c("LYSOSOME","ENDOSOME")) res[i]<-"LYSOSOME&ENDOSOME"
-            counts[i]<-Nb*(cls$PM_ratio[i]+cls$ER_ratio[i]+cls$GOLGI_ratio[i]+cls$MITOCHONDRION_ratio[i]+cls$LYSOSOME_ratio[i]+cls$ENDOSOME_ratio[i])
+            if (res[i] %in% c("LYSOSOME","ENDOSOME")){
+                res[i]<-"LYSOSOME&ENDOSOME"
+                counts[i]<-Nb*(cls$LYSOSOME_ratio[i]+cls$ENDOSOME_ratio[i])
+            } else {
+                counts[i]<-Nb*max(rr)
+            }
             next
         }
 
