@@ -446,7 +446,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
     annotation.component<-markers
     if (!is.null(output)){
         output.data<-paste(output,"_table.txt",sep="")
-        output.roc<-paste(output,"_roc.pdf",sep="")
+        output.roc<-paste(output,"_pr.pdf",sep="")
         output.cdt<-paste(output,"_javatree.cdt",sep="")
     } else output.data<-output.roc<-output.cdt<-NULL
     if (is.null(Annotation)){

@@ -42,7 +42,7 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=1,data.ID=2,ma
     output files:
     output_table.txt - annoataed data with cluster assignement
     ouput_javatree.cdt - heatmap for java treeview
-    output_roc.pdf -  Roc curves main_fraction will be saved. see ?plot.rocAM}
+    output_pr.pdf -  Roc curves main_fraction will be saved. see ?plot.rocAM}
 
   \item{sep}{to specify a character which delimits fields. default is
     tab-delimited text.}
