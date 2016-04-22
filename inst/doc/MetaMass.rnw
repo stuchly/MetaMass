@@ -118,7 +118,7 @@ R. In this case three files will be created in the working directory.
   \item name\_table.txt - spreadsheet containing the analyzed data and
     all annotations used (see below) for the analysis together the
     cluster assignment and purity with respect to the most abundant component
-    \item name\_roc.pdf - precision-recall curves of the
+    \item name\_pr.pdf - precision-recall curves of the
       cluster assignment with respect to all used annotations
       \item name\_javatree.cdt - heatmap to be visualized in the Java
         TreeView application. Each line is annotated by the protein
@@ -153,7 +153,7 @@ Res1= analyze.MSfile(MSfile="filename.txt", Metadata= "Christoforou", output="my
 Explanation: This is the simplest command for data analysis. The program applies a number of default options. Users therefore only have to specify the test file, the metadata and the prefix for the outputfiles. Below we explain how users can write commands to vary a number of parameters.\\
 MS file: test dataset, name of text file in working directory\\
 Metadata: MetaMass contains data from studies analyzed in
-Lund-Johansen et al. 2016 (see \texttt{?Metadata}). The Christoforou dataset was obtained using density gradient centrifugation of intact organelles, and this set has the highest resolution. Output: user-defined prefix for the output files (if output= “myfile” the output files will be named “myfile\_table.txt”, “myfile\_javatree.cdt”, myfile\_roc.pdf”)\\
+Lund-Johansen et al. 2016 (see \texttt{?Metadata}). The Christoforou dataset was obtained using density gradient centrifugation of intact organelles, and this set has the highest resolution. Output: user-defined prefix for the output files (if output= “myfile” the output files will be named “myfile\_table.txt”, “myfile\_javatree.cdt”, myfile\_pr.pdf”)\\
 \\
 Analysis option 2: Compare the information in the dataset to that in annotation databases such as Uniprot and the Human Protein Atlas.  This option is primarily useful to obtain a table with information about how the proteins are annotated in Uniprot, GO and the HPA.
 \scriptsize
