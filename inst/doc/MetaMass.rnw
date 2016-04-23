@@ -6,11 +6,11 @@
 \usepackage{epigraph}
 \usepackage{amsmath}
 \usepackage{wasysym}
-%% \setlength{\textwidth}{6.5in}
-%% \setlength{\textheight}{9in}
-%% \setlength{\oddsidemargin}{0in}
-%% \setlength{\evensidemargin}{0in}
-%% \setlength{\topmargin}{-1.5cm}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{9in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{-1.5cm}
 \renewcommand*{\theenumi}{\thesection.\arabic{enumi}}
 \renewcommand*{\theenumii}{\theenumi.\arabic{enumii}}
 \numberwithin{equation}{subsection}
@@ -29,10 +29,10 @@
 \section{Introduction}
 The presented package provides tools for meta-analysis of human proteome mass spectrometry (MS) data as described in (ref Lund-Johansen et al 2016). The purpose is to provide stand-alone tool for
 analyzing text files or \texttt{data.frame} with an integration
-with R for further analysis.\\
+with R for further analysis.
 \\
-Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and purity scores and precision-recall curves that provide information about the fit between the dataset and the marker set.\\
-\\
+Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and purity scores and precision-recall curves that provide information about the fit between the dataset and the marker set.
+
 \noindent Required software:
 \begin{itemize}
 \item[] R (https://cran.r-project.org)
@@ -42,11 +42,11 @@ Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics d
 \item[] JavaTreeView (http://jtreeview.sourceforge.net/) - for visualisation
 of heatmaps (the .cdt files - see below)
 \end{itemize}
-%% Installation: \\
-%% Install devtools from R: \texttt{install.packages(``devtools'')}\\
-%% load devtools: \texttt{library(devtools)}\\
-%% Install MetaMass: \texttt{install_github(``stuchly/MetaMass'')}\\
-%% load MetaMass: \texttt{library(MetaMass)}\\
+%% Installation:
+%% Install devtools from R: \texttt{install.packages(``devtools'')}
+%% load devtools: \texttt{library(devtools)}
+%% Install MetaMass: \texttt{install_github(``stuchly/MetaMass'')}
+%% load MetaMass: \texttt{library(MetaMass)}
 %% see this vignette: \texttt{vignette("MetaMass")
 \scriptsize
 @
@@ -57,18 +57,17 @@ install_github("stuchly/MetaMass") ## Install MetaMass
 library(MetaMass) ## load MetaMass
 vignette("MetaMass") ## see this vignette
 @ %def
-
 \normalsize
 \section{Input}
  On input user provides a
 \texttt{data.frame} containing the MS data or path to text file(s)
 with the data. Data are
-then processed with respect to following conventions:\\
+then processed with respect to following conventions:
 \begin{itemize}
   \item All columns containing numerical values only are used as MS data
     \item MS data could be divided into different groups'' if separated
       by blank/non-numeric column i.e. numeric columns flanked by
-      non-numeric columns are understood as a single "group''.\\
+      non-numeric columns are understood as a single "group''.
       With more file on input each file is considered as separate set
       of groups.
     \item \texttt{data.frame} must contain a column containing protein
@@ -95,7 +94,7 @@ data_table<-read.table(filename,header=TRUE,sep="\t")
 @ %def
 \normalsize
 If there is an error concerning reading the input file, the user can
-try this function to check if the file is in correct format.\\
+try this function to check if the file is in correct format.
 The other possible issue is the grouping of the data columns. As
 mentioned above each contiguous sequence of numerical columns
 (flanked by non-numeric column) is considered as one group - the user
@@ -129,7 +128,7 @@ R. In this case three files will be created in the working directory.
 \section{Metadata}
 The package is distributed with MS data which could be used to
 reproduce the results in the paper or as a reference for user supplied
-data - these data are called Metadata - see \texttt{?metadata}.\\
+data - these data are called Metadata - see \texttt{?Metadata.}
 The Metadata can be used as \texttt{data.frame} or if the user want to
 open then in a spreadsheet editor their location on the computer can
 be found via \texttt{system.file} function
@@ -143,19 +142,19 @@ filename
 \section{Analysis options}
 See \texttt{?analyze.MSfile} for detailed information.
 
-Analysis option 1: Map proteins in the dataset with unknown locations and assess the precision of the mapping. The test dataset is clustered and classified with the Christoforou markers (default option). The metadata is not clustered/classified but aligned “passively” to serve as a reference (default option).\\
+\subsection{Analysis option 1} Map proteins in the dataset with unknown locations and assess the precision of the mapping. The test dataset is clustered and classified with the Christoforou markers (default option). The metadata is not clustered/classified but aligned “passively” to serve as a reference (default option).
 \scriptsize
 @
 <<eval=false>>=
 Res1= analyze.MSfile(MSfile="filename.txt", Metadata= "Christoforou", output="myfile2")
 @ %def
 \normalsize
-Explanation: This is the simplest command for data analysis. The program applies a number of default options. Users therefore only have to specify the test file, the metadata and the prefix for the outputfiles. Below we explain how users can write commands to vary a number of parameters.\\
-MS file: test dataset, name of text file in working directory\\
+Explanation: This is the simplest command for data analysis. The program applies a number of default options. Users therefore only have to specify the test file, the metadata and the prefix for the outputfiles. Below we explain how users can write commands to vary a number of parameters.
+MS file: test dataset, name of text file in working directory
 Metadata: MetaMass contains data from studies analyzed in
-Lund-Johansen et al. 2016 (see \texttt{?Metadata}). The Christoforou dataset was obtained using density gradient centrifugation of intact organelles, and this set has the highest resolution. Output: user-defined prefix for the output files (if output= “myfile” the output files will be named “myfile\_table.txt”, “myfile\_javatree.cdt”, myfile\_pr.pdf”)\\
-\\
-Analysis option 2: Compare the information in the dataset to that in annotation databases such as Uniprot and the Human Protein Atlas.  This option is primarily useful to obtain a table with information about how the proteins are annotated in Uniprot, GO and the HPA.
+Lund-Johansen et al. 2016 (see \texttt{?Metadata}). The Christoforou dataset was obtained using density gradient centrifugation of intact organelles, and this set has the highest resolution. Output: user-defined prefix for the output files (if output= “myfile” the output files will be named “myfile\_table.txt”, “myfile\_javatree.cdt”, myfile\_pr.pdf”)
+
+\subsection{Analysis option 2} Compare the information in the dataset to that in annotation databases such as Uniprot and the Human Protein Atlas.  This option is primarily useful to obtain a table with information about how the proteins are annotated in Uniprot, GO and the HPA.
 \scriptsize
 @
 <<eval=false>>=
@@ -172,38 +171,38 @@ Protein Atlas (HPA) supportive, 7= HPA uncertain. (see)
 ?AnnotationAM
 @ %def
 \normalsize
-By specifying markers as c(3:7), the output table will contain columns for annotations from Uniprot, GO and the Human Protein  Atlas.  The heatmap will still be organized according to the mapping result using the Christoforou marker set.\\
-\\
-Analysis option 3: Visualize how proteins with well-defined locations are distributed in the subcellular fractions in the test dataset. The Christoforou dataset is organized according to the localizations mapped in the original publication. The test dataset is “passively” aligned.\\
+By specifying markers as c(3:7), the output table will contain columns for annotations from Uniprot, GO and the Human Protein  Atlas.  The heatmap will still be organized according to the mapping result using the Christoforou marker set.
+
+\subsection{Analysis option 3} Visualize how proteins with well-defined locations are distributed in the subcellular fractions in the test dataset. The Christoforou dataset is organized according to the localizations mapped in the original publication. The test dataset is “passively” aligned.
 \scriptsize
 @
 <<eval=false>>=
 Res3= analyze.MSfile(MSfile="filename.txt", Metadata= "Christoforou", output="myfile3",group=0,cluster.metadata=TRUE)
 @ %def
 \normalsize
-group=0 specifies that the test dataset will not be clustered, cluster.metadata= TRUE indicates that the metadataset will be clustered (default=FALSE)\\
-\\
-Analysis option 4: Compare the partitioning in the dataset to results obtained using different types of fractionation methods.
+group=0 specifies that the test dataset will not be clustered, cluster.metadata= TRUE indicates that the metadataset will be clustered (default=FALSE)
+
+\subsection{Analysis option 4}
+Compare the partitioning in the dataset to results obtained using different types of fractionation methods.
 \scriptsize
 @
 <<eval=false>>=
 Res4= analyze.MSfile(MSfile="filename.txt", Metadata= "Larance", output="myfile4")
 @ %def
 \normalsize
-Explanation: The “Larance” dataset was obtained using the popular Pierce kit for subcellular fractionation.  The  “Thakar” dataset was obtained using a similar method (differential detergent fractionation). The “Bileck” dataset was obtained by lysing cells in the presence of 0.5\% Triton-X100. The “Carvalho” dataset is relevant for results obtained with detergent-free separation of cytosol, nuclei and mitochondria. Note that a single dataset with results obtained with a method to separate cytosol, nucleus and membranes is not suitable since the number of clusters will be too low.\\
-\\
-Additional user-selectable variables:\\
+Explanation: The “Larance” dataset was obtained using the popular Pierce kit for subcellular fractionation.  The  “Thakar” dataset was obtained using a similar method (differential detergent fractionation). The “Bileck” dataset was obtained by lysing cells in the presence of 0.5\% Triton-X100. The “Carvalho” dataset is relevant for results obtained with detergent-free separation of cytosol, nuclei and mitochondria. Note that a single dataset with results obtained with a method to separate cytosol, nucleus and membranes is not suitable since the number of clusters will be too low.
+
+\subsection{Additional user-selectable variables}
 Number of groups in K-means clustering : The default option is 500 groups. The optimal number of proteins per group is 10-20. If the dataset has more than 5000 proteins or less than 3000 proteins users may specify the number of groups accordingly.  The command clusters= 250 specifies 250 clusters.
 Comparison metrics: The default option is Eucledian distance. The
 command… metric =”correlation” specifies Pearson correlation (see \texttt{?analyze.MSfile}).
-
 \section{Analysis within R}
 Although the main purpose of this package is to create annotated lokup
 tables and heatmaps which can be conveniently analyzed outside R the
-results can be naturally treated as any R object.\\
+results can be naturally treated as any R object.
 The function \texttt{analyze.MSfile} returns named list containing the
 original data, annotation(s) and cluster assignments. Two function
-can be used to extract it's contents - see \texttt{?get.data} and \texttt{?get.clusters}.\\
+can be used to extract it's contents - see \texttt{?get.data} and \texttt{?get.clusters}.
 \scriptsize
 @
 <<>>=
@@ -218,7 +217,7 @@ head(cls2_1)
 \normalsize
 Here we have extracted the data accompanied only by the protein ID and
 the cluster ID together with the analysis results with respect to the
-first marker set.\\
+first marker set.
 As the the clusters in the \texttt{cls2\_1} \texttt{data.frame} are
 ordered by the cluster ID we can add any information to the data e.g.
 \scriptsize
@@ -226,14 +225,13 @@ ordered by the cluster ID we can add any information to the data e.g.
 <<>>=
 data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
 @ %def
-
 \normalsize
 \section{Examples}
 The simplest way to use this package is the wrapper function
 \texttt{analyze.MSfile} (see \texttt{?analyze.MSfile}). This function
 reads and process your the tab-delimited text file with MS data and
-stores the results in the working directory.\\
-Set working directory: In R-studio go to menu: Session, select set working directory, identify the folder where your data are stored. The output files will also appear in this folder.\\
+stores the results in the working directory.
+Set working directory: In R-studio go to menu: Session, select set working directory, identify the folder where your data are stored. The output files will also appear in this folder.
 After setting the working directory, it is necessary to provide the
 path to the tab-delimited file with MSdata. As the first example we
 use the data from figure 1 in the paper without the first
@@ -248,8 +246,7 @@ The function MetaMass recognizes two types of data -
 \texttt{MSfile} and \texttt{Metadata}. The \texttt{MSfile} are the
 actual data to be analyzed whereas the Metadata stand for internally
 stored MSdata which can be used as reference (see
-\texttt{?Metadata}).\\
-
+\texttt{?Metadata}).
 \scriptsize
 @
 <<>>=
@@ -265,7 +262,7 @@ output will be stored in files starting with the string 'res'. As a
 toy example (to get the similar result as in figure 1a) we want to
 cluster only the metadata and align the \texttt{MSfile} - do this we
 set \texttt{group=0} which says that none of the data in MSfile should
-be clustered and we have to specify that want cluster the metadata \texttt{cluster.metadata=TRUE}).\\
+be clustered and we have to specify that want cluster the metadata \texttt{cluster.metadata=TRUE}).
 \\
 As the second example let us reconstruct the figure 1b in the
 paper. Here we want to cluster the MSfile (which is default and we
@@ -293,7 +290,7 @@ res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
 @ %def
 \normalsize
 As the last example let us show how to use multiple annotations (one can use custom annotation file if
-it corresponds the appropriate format).\\
+it corresponds the appropriate format).
 Let us use all but the 3rd annotation i.e. columns 3,4,6,7. And as another
 example of option we use $480$ cluster.
 \scriptsize
@@ -307,13 +304,13 @@ User can plot the precision-recall curves directly by (figure $1$)
 @
 <<eval=false>>=
 par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1)
-plot.prAM(res4) #plot in  6 rows and 3 columns
+plot.prAM(res4) #plot in  5 rows and 3 columns
 @ %def
 \normalsize
 <<produce-plot, results = hide,echo=false>>=
 pdf('roc1.pdf')
 par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.7)
-plot.prAM(res4) #plot in 5 rows and 4 columns    # Produces Figure \ref{fig1}
+plot.prAM(res4) #plot in 5 rows and 3 columns    # Produces Figure \ref{fig1}
 dev.off()
 @
 And the heatmaps as seen in the Jva TreeView application are shown in
@@ -337,7 +334,7 @@ cluster contains just $1$ protein) however the number of unclassified
 proteins grows as well. To asses this fact we analyzed the data in
 examples 1-3 with different number of clusters (starting with average
 cluster size around $2000$ - the exact value depends on the size of
-dataset - and decreasing the size to $2$) - figure $3$.\\
+dataset - and decreasing the size to $2$) - figure $3$.
 The solid red line (example 1) shows almost perfect reconstruction of
 classification with as much as $100$ proteins per cluster (left
 panel) and since in this example only annotated proteins were used no
