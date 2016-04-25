@@ -239,7 +239,7 @@ write.cdt<-function(AM,file="results.cdt",annotation=FALSE,rsID=1){
     dd<-merge(AM$annotation$annotation,dd,by.x=AM$annotation$ID,by.y=AM$data$ID)
     ord<-order(dd$ord)
     Annot<-dd[ord,AM$annotation$components.col[rsID]]
-    if (length(grep("category",colnames(AM$data$data)))>0) AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Annot=",Annot,"Assign=",AM$data$data[,paste("category",rsID,sep="_")]) else AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Annot=",Annot,"Assign=",AM$data$data[,paste("main_component",rsID,sep="_")])
+    if (length(grep("assigned_location",colnames(AM$data$data)))>0) AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Marker=",Annot,"Assign=",AM$data$data[,paste("assigned_location",rsID,sep="_")]) else AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Marker=",Annot,"Assign=",AM$data$data[,paste("main_component",rsID,sep="_")])
     data<-AM$data$data
     data.cols<-AM$data$data.cols
     endC<-max(data.cols)
@@ -373,7 +373,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
             dd[sel,AM$annotation$components.col[i]]<-"NUCLEUS"
         }
         component<-NULL
-        for (i in 1:length(AM$annotation$components)) component<-unique(c(component,unique(as.character(get.clusters(AM,rID=i)$category))))
+        for (i in 1:length(AM$annotation$components)) component<-unique(c(component,unique(as.character(get.clusters(AM,rID=i)$assigned_location))))
         component<-as.character(na.omit(component))
 
     }
@@ -390,7 +390,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
             sel<-which(dd[,AM$annotation$components.col[j]]==i)
 
             ## pur<-cls$purity_main_component[dd$clusters[sel]]
-            if (is.null(cls[dd$clusters[sel],"purity_category"])) next else pur<-cls[dd$clusters[sel],"purity_category"]
+            if (is.null(cls[dd$clusters[sel],"purity_assigned_location"])) next else pur<-cls[dd$clusters[sel],"purity_assigned_location"]
             purity<-sort(unique(pur),decreasing=TRUE)
 
             if (length(purity)>0) loc<-data.frame(purity=purity,ratio=NA) else {
@@ -548,22 +548,22 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
             try(nbct<-categ[[2]])
             try(categ<-categ[[1]])
             score<-2*nbct-cls$Nb_of_annotations
-            try(res<-addreplace.column(res,rID=i,category=categ))
+            try(res<-addreplace.column(res,rID=i,assigned_location=categ))
             levelsCo<-levelsC
             levelsC<-levelsC[-4]
             levelsC[4]<-"LYSOSOME&ENDOSOME"
-            presentCOMP<-unique(res$results$clusters[[i]][,"category"])
+            presentCOMP<-unique(res$results$clusters[[i]][,"assigned_location"])
 
             ss<-which(!(presentCOMP %in% levelsC) & !is.na(presentCOMP) & presentCOMP!="")
             ss<-which(!(presentCOMP %in% levelsC))
             presentCOMP<-presentCOMP[ss]
             ss<-which(!is.na(presentCOMP))
             presentCOMP<-presentCOMP[ss]
-            ss<-which(levelsC %in% res$results$clusters[[i]][,"category"])
-            try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="category"))
+            ss<-which(levelsC %in% res$results$clusters[[i]][,"assigned_location"])
+            try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="assigned_location"))
             levelsC<-levelsCo
             ##try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_category=nbct,purity_category=nbct/cls$Nb_of_annotations,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_assigned_location=nbct,purity_assigned_location=nbct/cls$Nb_of_annotations,add2data=FALSE))
             ctexist<-TRUE
         }
     }
@@ -573,7 +573,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
 
 
 
-    if (ctexist) ord<-order(cls$category,-cls$Nb_category, -cls$purity_category) else ord<-order(cls$main_component,-cls$Nb_main_component, -cls$purity_main_component)
+    if (ctexist) ord<-order(cls$assigned_location,-cls$Nb_assigned_location, -cls$purity_assigned_location) else ord<-order(cls$main_component,-cls$Nb_main_component, -cls$purity_main_component)
     res<-order.AM(res,ordering=ord)
     data<-get.data(res)
     ord<-order(data$updated_order)
@@ -583,7 +583,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
 
     if (!is.null(output.roc)){
 
-        if (ctexist) Categ<-"category" else Categ<-"main_component"
+        if (ctexist) Categ<-"assigned_location" else Categ<-"main_component"
         dd<-get.data(res)
 
 
