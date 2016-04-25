@@ -131,7 +131,7 @@ reproduce the results in the paper or as a reference for user supplied
 data - these data are called Metadata - see \texttt{?Metadata.}
 The Metadata can be used as \texttt{data.frame} or if the user want to
 open then in a spreadsheet editor their location on the computer can
-be found via \texttt{system.file} function
+be found via \texttt{system.file} function.
 \scriptsize
 @
 <<>>=
