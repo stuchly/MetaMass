@@ -261,11 +261,13 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         AM$data$data<-AM$data$data[,-ss]
         ss<-(AM$data$data.cols[length(AM$data$data.cols)]+1):ncol(AM$data$data)
         s1<-grep("^main_component_([0-9]+)$",colnames(AM$data$data))
+        s1p<-grep("^purity_main_component_([0-9]+)$|^main_component_([0-9]+)$",colnames(AM$data$data)[ss])
         ss2<-(AM$data$data.cols[length(AM$data$data.cols)]+2):ncol(AM$data$data)
         anots<-as.numeric(gsub("^main_component_([0-9]+)$","\\1",colnames(AM$data$data)[s1]))
         cc<-colnames(AM$data$data)[ss2]
         for (i in anots) cc<-gsub(paste("_",i,"$",sep=""),sub("^Annot","",AM$annotation$components.col[i]),cc)
         colnames(AM$data$data)[ss2]<-cc
+
         if (fulltext){
             Annot_out<-AM$annotation$annotation[,c(colnames(AM$annotation$annotation)[1],AM$annotation$ID,AM$annotation$components.col)]
             data(full_text_annotation,envir =  environment())
@@ -274,7 +276,7 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         } else {
             Annot_out<-AM$annotation$annotation[,c(AM$annotation$ID,AM$annotation$components.col)]
         }
-        return(merge(Annot_out,cbind(AM$data$data[,ss],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID))
+        return(merge(Annot_out,cbind(AM$data$data[,ss[-s1p]],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID))
     }
     if (!annotation) {
         if (data.only){
@@ -563,7 +565,8 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
             try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="assigned_location"))
             levelsC<-levelsCo
             ##try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_assigned_location=nbct,purity_assigned_location=nbct/cls$Nb_of_annotations,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_assigned_location=nbct,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,purity_assigned_location=nbct/cls$Nb_of_annotations,add2data=TRUE))
             ctexist<-TRUE
         }
     }

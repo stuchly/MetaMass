@@ -5,7 +5,7 @@ Installation guide:
 
 install R https://cran.r-project.org/
 
-install Rtools (necessary on Windows only) https://cran.r-project.org/bin/windows/Rtools/
+install Rtools (necessary on MS Windows operating system only) https://cran.r-project.org/bin/windows/Rtools/
 
 start R and install devtools: install.packages(“devtools”)
 
