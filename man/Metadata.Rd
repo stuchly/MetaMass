@@ -37,12 +37,19 @@ filename<-system.file("extdata","Carvalho.txt",package="MetaMS")
 \details{
 These data are referred in the article (and in the Walkthrough section
 in the vignette as follows
+
 Christoforou - study1
+
 Bileck - study9
+
 Rodriguez - study2
+
 Andreyev - study3
+
 Thakar - study10
+
 Larance - study11
+
 Carvalho - study4
 }
 \references{
