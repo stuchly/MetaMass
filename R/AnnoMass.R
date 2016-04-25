@@ -430,7 +430,7 @@ plot.prAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
 
         plot(rocAM[[i]][[jj]][,c(2,1)],type="l",col=jj,lty=jj,xlim=c(0,1),ylim=c(0,1),main=names(rocAM)[i],xlab="Recall",ylab="Precision")
         K<-length(rocAM[[i]])
-        legend(0.4,0.6,legend=paste(annotation),lty=1:K,col=1:K,cex=0.45)
+        legend("bottomleft",legend=paste(annotation),lty=1:K,col=1:K,cex=1)
         if (length(rocAM[[i]])<=jj) next
 
         for (j in (jj+1):length(rocAM[[i]])){
