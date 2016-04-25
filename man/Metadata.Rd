@@ -34,6 +34,17 @@ filename<-system.file("extdata","Carvalho.txt",package="MetaMS")
   [,2:ncol] numerical values separated by empty columns
 }
 \source{}
+\details{
+These data are referred in the article (and in the Walkthrough section
+in the vignette as follows
+Christoforou - study1
+Bileck - study9
+Rodriguez - study2
+Andreyev - study3
+Thakar - study10
+Larance - study11
+Carvalho - study4
+}
 \references{
   Christoforou, Mulvey, Breckels, et al. (2016) 10.1038/ncomms9992
 
