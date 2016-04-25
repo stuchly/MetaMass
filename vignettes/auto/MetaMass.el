@@ -12,12 +12,27 @@
     "graphicx"
     "verbatim"
     "inputenc"
-    "epigraph"
     "amsmath"
+    "amssymb"
+    "amsthm"
+    "mathrsfs"
+    "amsfonts"
+    "epigraph"
     "wasysym"
-    "Sweave")
+    "Sweave"
+    "hyperref")
    (LaTeX-add-labels
-    "fig1"
+    "opt1"
+    "opt2"
+    "opt3"
+    "opt4"
+    "opt5"
+    "examp_s"
+    "ex1"
+    "ex2"
+    "ex3"
+    "ex4"
     "fig2"
-    "fig3")))
+    "fig1"
+    "fig4")))
 
