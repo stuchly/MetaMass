@@ -128,7 +128,7 @@ res4<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2_4annot
 ###################################################
 ### code chunk number 18: MetaMass.rnw:305-307 (eval = FALSE)
 ###################################################
-## par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1)
+## par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
 ## plot.prAM(res4) #plot in  5 rows and 3 columns
 
 
@@ -136,7 +136,7 @@ res4<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2_4annot
 ### code chunk number 19: produce-plot
 ###################################################
 pdf('roc1.pdf')
-par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.7)
+par(mfrow=c(5,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
 plot.prAM(res4) #plot in 5 rows and 3 columns    # Produces Figure \ref{fig1}
 dev.off()
 
