@@ -81,10 +81,10 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=1,data.ID=2,ma
 \value{Object of class AnnoMass}
 
 \details{the data are clustered and annotated wih rescpect to chosen
-  annonation(s); see ?get.clusters for the meaning of "category" and
+  annonation(s); see ?get.clusters for the meaning of "assigned_location" and
   "main_component".
 data in outupfiles (_table and _treeview) are sorted first with respect
-  to the category (in the order in data(levelsC) data.frame a ties are
+  to the assigned_location (in the order in data(levelsC) data.frame a ties are
   splitted first with recpect to the number of annotations in the
   clusters and then with respect to purity_main_component score. The
   values of markers[sort.by] annotation are used.}

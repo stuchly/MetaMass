@@ -19,13 +19,13 @@ get.clusters(AM,rID=1)
   main_component  - most abundant component in the cluster
   purity_main_component - ration of main_component in the cluster
   Nb_main_component - number of annotation suporting the most abundant component
-  category - annotation of cluster with respect predefined scheme (see details)
+  assigned_location - annotation of cluster with respect predefined scheme (see details)
 
   other columns - ratio of other components etc
 
 }
 \details{
-  category scheme:
+  assigned_location scheme:
   Cytoplasm : (Cyt + CS (cytoskeleton)+proteasome ) >=51\%
   Subcategory: cytoskeleton if more than 30\% of markers in cytoplasm
   category is cytosleketon
