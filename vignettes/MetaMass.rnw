@@ -236,7 +236,7 @@ good resolution of cytosol, membranes and nuclei, but does not
 discriminate ER from mitochondria. When the datasets are combined,
 they complement each other. See figure \ref{opt5}
 
-\begin{figure}[h]
+\begin{figure}[b]
 \includegraphics{opt5.pdf}
 \caption{Heatmnap as seen in JavaTreeView}
 \label{opt5}
@@ -283,11 +283,11 @@ reads and process your the tab-delimited text file with MS data and
 stores the results in the working directory.
 Set working directory: In R-studio go to menu: Session, select set working directory, identify the folder where your data are stored. The output files will also appear in this folder.
 After setting the working directory, it is necessary to provide the
+path to the tab-delimited file with MSdata. As the first example we use the data from figure 1 in the paper without the first
+(reference;metadata) columns.
 \subsection{Example 1}
 \label{ex1}
-path to the tab-delimited file with MSdata. As the first example we
-use the data from figure 1 in the paper without the first
-(reference;metadata) columns.
+
 \scriptsize
 @
 <<>>=
