@@ -391,7 +391,7 @@ By default only proteins which were detected in all studies (groups)
 and Metadata are used for clustering. This could be bypassed by
 setting the parameter \texttt{overlap=$k$} - in this case only the
 proteins which were detected in at least $k$ studies are used for
-clustering. The other protein would reamain in the table and heatmap
+clustering. The other proteins would remain in the table and heatmap
 as unclassified.
 \scriptsize
 @
