@@ -400,7 +400,7 @@ files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andrey
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3intersect")
 @ %def
 \normalsize
-Here only $1280$ present in all studies are exported.
+Here only $1280$ proteins present in all studies are exported.
 \scriptsize
 @
 <<>>=
