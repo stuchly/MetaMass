@@ -405,7 +405,7 @@ Here only $1280$ proteins present in all studies are exported.
 @
 <<>>=
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
-res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=3)
+res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_3",overlap=3)
 @ %def
 \normalsize
 Here $8548$ proteins present in at least $3$ studies are analyzed.
@@ -413,10 +413,24 @@ Here $8548$ proteins present in at least $3$ studies are analyzed.
 @
 <<>>=
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
-res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_6",overlap=5)
+res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=5,markers=c(3:7))
 @ %def
 \normalsize
 An finally $3315$ proteins detected in at least $5$ studies.
+In this case of course we leave large proportion of proteins
+unclassified see figure \ref{roc2}.
+<<produce-plot, results = hide,echo=false>>=
+pdf('roc2.pdf')
+par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
+plot.prAM(res3) #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
+dev.off()
+@
+
+\begin{figure}[h]
+\includegraphics{roc2.pdf}
+\caption{Precision-recall curves}
+\label{roc2}
+\end{figure}
 \section{Number of clusters}
 It is obvious that the classification recall depends strongly on the
 number of clusters - the recall grows as the average cluster size
