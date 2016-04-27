@@ -141,21 +141,21 @@ dev.off()
 
 
 ###################################################
-### code chunk number 20: MetaMass.rnw:398-400
+### code chunk number 20: MetaMass.rnw:399-401
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3intersect")
 
 
 ###################################################
-### code chunk number 21: MetaMass.rnw:406-408
+### code chunk number 21: MetaMass.rnw:407-409
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_3",overlap=3)
 
 
 ###################################################
-### code chunk number 22: MetaMass.rnw:414-416
+### code chunk number 22: MetaMass.rnw:415-417
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=5,markers=c(3:7))
