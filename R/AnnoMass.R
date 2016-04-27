@@ -347,7 +347,7 @@ roc.AM1<-function(AM,rID=NULL,component=NULL){
                                                                           }
             N<-length(purity)
             for (a in 1:N){
-                loc[a,2]<-length(which(pur>=purity[a]))/length(sel)
+                loc[a,2]<-length(which(pur>=purity[a])) /length(sel)
 
             }
             loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=1))
@@ -401,10 +401,10 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
                                                                           }
             N<-length(purity)
             for (a in 1:N){
-                loc[a,2]<-length(which(pur>=purity[a]))/length(sel)
+                loc[a,2]<-length(which(pur>=purity[a])) /length(sel)
 
             }
-            loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=1))
+            loc<-rbind(c(purity=1,ratio=0),loc) #,c(purity=0,ratio=max(loc[a,2],1)))
 
             res[[i]][[j]]<-loc
         }
@@ -429,8 +429,8 @@ plot.prAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
 
         for (jj in 1:(length(rocAM[[i]]))) if (!is.null(rocAM[[i]][[jj]])) break
         if (is.null(rocAM[[i]][[jj]])) next
-
-        plot(rocAM[[i]][[jj]][,c(2,1)],type="l",col=jj,lty=jj,xlim=c(0,1),ylim=c(0,1),main=names(rocAM)[i],xlab="Recall",ylab="Precision")
+        xlm1<-max(as.numeric(unlist(rocAM[[i]])),na.rm=TRUE)
+        plot(rocAM[[i]][[jj]][,c(2,1)],type="l",col=jj,lty=jj,xlim=c(0,xlm1),ylim=c(0,1),main=names(rocAM)[i],xlab="Recall",ylab="Precision")
         K<-length(rocAM[[i]])
         legend("bottomleft",legend=paste(annotation),lty=1:K,col=1:K,cex=1)
         if (length(rocAM[[i]])<=jj) next
