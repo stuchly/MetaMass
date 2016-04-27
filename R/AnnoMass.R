@@ -404,7 +404,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
                 loc[a,2]<-length(which(pur>=purity[a])) /length(sel)
 
             }
-            loc<-rbind(c(purity=1,ratio=0),loc) #,c(purity=0,ratio=max(loc[a,2],1)))
+            loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=max(loc[a,2])))
 
             res[[i]][[j]]<-loc
         }
