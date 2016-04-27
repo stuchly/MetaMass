@@ -140,3 +140,24 @@ plot.prAM(res4) #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
 dev.off()
 
 
+###################################################
+### code chunk number 20: MetaMass.rnw:398-400
+###################################################
+files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
+res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3intersect")
+
+
+###################################################
+### code chunk number 21: MetaMass.rnw:406-408
+###################################################
+files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
+res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=3)
+
+
+###################################################
+### code chunk number 22: MetaMass.rnw:414-416
+###################################################
+files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
+res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_6",overlap=5)
+
+
