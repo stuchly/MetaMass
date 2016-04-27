@@ -1,4 +1,4 @@
-construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.component=3,group_names=NULL){
+construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.component=3,group_names=NULL,meta_gr=1){
     colnames(data)<-paste("data",gsub("\\s","_",gsub("\\s+"," ",colnames(data))),sep="_")
     data.ID<-colnames(data)[data.ID]
     if(any(duplicated(data[,data.ID]))) warning("Protein IDs duplicated in MS data.frame")
@@ -55,7 +55,7 @@ construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.comp
         colnames(present)<-names(groups)<-group_names
     }
 
-    for (i in 1:ngroups){
+    for (i in meta_gr:ngroups){
         cls<-c(groups[[i]][1]:groups[[i]][2])
         ss<-rowSums(data[,data.cols[cls]])
         selNA<-which(ss==length(cls))
@@ -444,8 +444,9 @@ plot.prAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
 
 }
 
-analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=500,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE){
+analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=500,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=NULL){
     annotation.component<-markers
+    all_ov<-ifelse(is.null(overlap),FALSE,TRUE)
     if (!is.null(output)){
         output.data<-paste(output,"_table.txt",sep="")
         output.roc<-paste(output,"_pr.pdf",sep="")
@@ -484,7 +485,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
                                             warning("Duplicated IDs are not alowed for multiple files. Duplicated IDs are removed.")
                                             resloc<-resloc[-which(duplicated(resloc[,data.ID[i]])),]
                                         }
-                                        res<-merge(res,data.frame(non_NUM_space="-",resloc),by.x=data.ID[1],by.y=data.ID[i]+1)
+                                        res<-merge(res,data.frame(non_NUM_space="-",resloc),by.x=data.ID[1],by.y=data.ID[i]+1,all.x=all_ov,all.y=all_ov)
                                     }
                                     MSfile<-res
                                     data.ID<-1
@@ -494,7 +495,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
                                 } else  if (!is.data.frame(MSfile)) MSfile<-read.table(MSfile,header=TRUE,stringsAsFactors=FALSE,sep=sep,comment.char="")
 
     if (!is.null(group) & length(group)==1) if (group==0 & (is.null(Metadata) | !cluster.metadata)) stop("Nothing to cluster!")
-
+    meta_gr<-1
     if (!is.null(Metadata)){
         Metadata<-metaD[[1]]
 
@@ -509,9 +510,10 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
         MSdata.cols<-which(sapply(MSfile,is.numeric))
         jumps<-which(diff(MSdata.cols)>1)
         ngroupsMS<-length(jumps)+1
+        meta_gr<-ngroupsMS
         if(is.null(group)) group<-1:ngroupsMS
 
-        MSfile<-merge(data.frame(Metadata,non_NUM_space="-"),MSfile,by.x=2,by.y=1)
+        MSfile<-merge(data.frame(Metadata,non_NUM_space="-"),MSfile,by.x=2,by.y=1,all.x=all_ov,all.y=all_ov)
 
         if (!is.null(group) & length(group)==1){
             if (group==0) group<-1:ngroups else if (cluster.metadata)  group<-c(1:ngroups,group+ngroups) else group<-group+ngroups
@@ -522,11 +524,21 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=2,da
 
     }
 
+    if (all_ov){
+        cc<-which(sapply(MSfile,is.numeric))
+        ss<-which(is.na(MSfile[,cc]),arr.ind=TRUE)
+        MSFc<-MSfile[,cc]
+        MSFc[is.na(MSFc)]<-1
+        MSfile[,cc]<-MSFc
+    }
 
 
+    AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
-    AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names)
-
+    if (all_ov){
+        pres<-rowSums(get.presence(AM))
+        subset<-which(pres>=overlap)
+    }
     res<-run.annotation(AM,clusters=clusters,method=method,metric=metric,iter.max=iter.max,nstart=nstart,group=group,subset=subset)
 
     data(AnnotationAM,envir =  environment())

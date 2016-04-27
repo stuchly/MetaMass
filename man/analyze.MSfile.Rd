@@ -5,8 +5,7 @@
   Annotates MS data file with respect cellular localisation
 }
 \usage{
-analyze.MSfile(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=1,data.ID=2,markers=3,group_names=NULL,clusters=500,output.data="annotated_data.txt",output.cdt="heatmap.cdt",output.roc="roc.pdf",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE)
-          }
+analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,data.ID=2,markers=3,group_names=NULL,clusters=500,output.data="annotated_data.txt",output.cdt="heatmap.cdt",output.roc="roc.pdf",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=NULL)}
 \arguments{
   \item{MSfile}{data.frame or character vector of path to the text
     file(s) with MS data. See details.}
@@ -76,6 +75,8 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata=NULL,annotation.ID=1,data.ID=2,ma
     be exported as reference into the cdt file gene description.}
 
   \item{cluster.metada}{logical. Should we cluster the Metadata?}
+
+  \item{overlap}{if null only proteins detected in all studies and Metadata will be used for clustering. If integer (k) only proteins detected t least k studies will be used for clustering}
 
 }
 \value{Object of class AnnoMass}
