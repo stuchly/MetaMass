@@ -393,7 +393,7 @@ setting the parameter \texttt{overlap=$k$} - in this case missing
 values are replaced by $1$s and only the
 proteins which were detected in at least $k$ studies are used for
 clustering. The other proteins would remain in the table and heatmap
-as unclassified.
+as unassigned.
 \scriptsize
 @
 <<>>=
