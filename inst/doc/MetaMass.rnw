@@ -145,7 +145,7 @@ filename<-system.file("extdata","Bileck.txt",package="MetaMass")
 filename
 @ %def
 \normalsize
-\section{Walkthough}
+\section{Walk-through}
 In this section we give detailed description how create and analyze
 the MS data files. This section is intended for users with minimal
 experience with R. If the reader wants to avoid downloading a creating
@@ -243,10 +243,10 @@ they complement each other. See figure \ref{opt5}
 \end{figure}
 \subsection{Additional user-selectable variables}
 Number of groups in K-means clustering : The default option is 500 groups. The optimal number of proteins per group is 10-20. If the dataset has more than 5000 proteins or less than 3000 proteins users may specify the number of groups accordingly.  The command clusters= 250 specifies 250 clusters.
-Comparison metrics: The default option is Eucledian distance. The
+Comparison metrics: The default option is Euclidean distance. The
 command… metric =”correlation” specifies Pearson correlation (see \texttt{?analyze.MSfile}).
 \section{Analysis within R}
-Although the main purpose of this package is to create annotated lokup
+Although the main purpose of this package is to create annotated lookup
 tables and heatmaps which can be conveniently analyzed outside R the
 results can be naturally treated as any R object.
 The function \texttt{analyze.MSfile} returns named list containing the
