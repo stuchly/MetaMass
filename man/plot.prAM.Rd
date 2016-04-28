@@ -12,7 +12,7 @@ plot.prAM(AM,abs=FALSE)
   \item{abs} {logical; plot number of assigned proteins instead of recall}
 }
 \details{This function evaluates clustering performance via
-  precesion-recall curves with respect to the
+  precision-recall curves with respect to the
   annotation}
 
 \examples{

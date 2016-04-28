@@ -87,7 +87,7 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,da
 data in outupfiles (_table and _treeview) are sorted first with respect
   to the assigned_location (in the order in data(levelsC) data.frame a ties are
   splitted first with recpect to the number of annotations in the
-  clusters and then with respect to purity_main_component score. The
+  clusters and then with respect to precision_assigned_location score. The
   values of markers[sort.by] annotation are used.}
 \examples{
 

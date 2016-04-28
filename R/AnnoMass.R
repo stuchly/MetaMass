@@ -174,18 +174,18 @@ run.annotation<-function(AM,method="kmeans",metric="correlation",clusters=60,ite
                 incMat[cl,fr]<-length(grep(fr,resData[resData$clusters==cl,AM$annotation$components.col[i]]))
             }
         }
-        incMat<-data.frame(cluster=1:clusters,incMat,Nb_of_annotations=NA,purity_main_component=NA,main_component=NA,stringsAsFactors=FALSE)
+        incMat<-data.frame(cluster=1:clusters,incMat,Nb_of_annotations=NA,precision_main_component=NA,main_component=NA,stringsAsFactors=FALSE)
 
         incMat$Nb_of_annotations=rowSums(incMat[,AM$annotation$components[[i]]])
 
         loc<-incMat[,AM$annotation$components[[i]]]/incMat$Nb_of_annotations
 
         whichMain<-apply(loc,MARGIN=1,FUN=function(x) which.max(x)[1])
-        purity_main_component<-sapply(1:length(whichMain),FUN=function(i,whichMain,loc) loc[i,whichMain[i]],loc=loc,whichMain=whichMain)
-        ss<-which(sapply(purity_main_component,is.null))
+        precision_main_component<-sapply(1:length(whichMain),FUN=function(i,whichMain,loc) loc[i,whichMain[i]],loc=loc,whichMain=whichMain)
+        ss<-which(sapply(precision_main_component,is.null))
 
-        if (length(ss)>0) purity_main_component[ss]<-NA
-        incMat$purity_main_component<-unlist(purity_main_component)
+        if (length(ss)>0) precision_main_component[ss]<-NA
+        incMat$precision_main_component<-unlist(precision_main_component)
 
         incMat$main_component<-AM$annotation$components[[i]][whichMain]
         colnames(loc)<-paste(colnames(loc),"ratio",sep="_")
@@ -210,7 +210,7 @@ run.annotation<-function(AM,method="kmeans",metric="correlation",clusters=60,ite
         }
         ##AM$results$clusters[[i]]$TP.FP<-TP.FP
         AM$data$data[,paste("main_component",i,sep="_")]<-AM$results$clusters[[i]]$main_component[AM$data$data$clusters]
-        AM$data$data[,paste("purity_main_component",i,sep="_")]<-AM$results$clusters[[i]]$purity_main_component[AM$data$data$clusters]
+        AM$data$data[,paste("precision_main_component",i,sep="_")]<-AM$results$clusters[[i]]$precision_main_component[AM$data$data$clusters]
 
     }
     return(AM)
@@ -261,7 +261,7 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         AM$data$data<-AM$data$data[,-ss]
         ss<-(AM$data$data.cols[length(AM$data$data.cols)]+1):ncol(AM$data$data)
         s1<-grep("^main_component_([0-9]+)$",colnames(AM$data$data))
-        s1p<-grep("^purity_main_component_([0-9]+)$|^main_component_([0-9]+)$",colnames(AM$data$data)[ss])
+        s1p<-grep("^precision_main_component_([0-9]+)$|^main_component_([0-9]+)$",colnames(AM$data$data)[ss])
         ss2<-(AM$data$data.cols[length(AM$data$data.cols)]+2):ncol(AM$data$data)
         anots<-as.numeric(gsub("^main_component_([0-9]+)$","\\1",colnames(AM$data$data)[s1]))
         cc<-colnames(AM$data$data)[ss2]
@@ -337,20 +337,20 @@ roc.AM1<-function(AM,rID=NULL,component=NULL){
             cls<-get.clusters(AM,rID=j)
             ##sel<-which(dd[,paste("main_component",j,sep="_")]==i)
             sel<-which(dd[,AM$annotation$components.col[j]]==i)
-            ## pur<-cls$purity_main_component[dd$clusters[sel]]
+            ## pur<-cls$precision_main_component[dd$clusters[sel]]
             if (is.null(cls[dd$clusters[sel],paste(i,"ratio",sep="_")])) next else pur<-cls[dd$clusters[sel],paste(i,"ratio",sep="_")]
-            purity<-sort(unique(pur),decreasing=TRUE)
+            precision<-sort(unique(pur),decreasing=TRUE)
 
-            if (length(purity)>0) loc<-data.frame(purity=purity,ratio=NA) else {
+            if (length(precision)>0) loc<-data.frame(precision=precision,ratio=NA) else {
                                                                               loc<-NULL
                                                                               next
                                                                           }
-            N<-length(purity)
+            N<-length(precision)
             for (a in 1:N){
-                loc[a,2]<-length(which(pur>=purity[a])) /length(sel)
+                loc[a,2]<-length(which(pur>=precision[a])) /length(sel)
 
             }
-            loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=1))
+            loc<-rbind(c(precision=1,ratio=0),loc,c(precision=0,ratio=1))
 
             res[[i]][[j]]<-loc
         }
@@ -391,20 +391,20 @@ roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
 
             sel<-which(dd[,AM$annotation$components.col[j]]==i)
 
-            ## pur<-cls$purity_main_component[dd$clusters[sel]]
-            if (is.null(cls[dd$clusters[sel],"purity_assigned_location"])) next else pur<-cls[dd$clusters[sel],"purity_assigned_location"]
-            purity<-sort(unique(pur),decreasing=TRUE)
+            ## pur<-cls$precision_main_component[dd$clusters[sel]]
+            if (is.null(cls[dd$clusters[sel],"precision_assigned_location"])) next else pur<-cls[dd$clusters[sel],"precision_assigned_location"]
+            precision<-sort(unique(pur),decreasing=TRUE)
 
-            if (length(purity)>0) loc<-data.frame(purity=purity,ratio=NA) else {
+            if (length(precision)>0) loc<-data.frame(precision=precision,ratio=NA) else {
                                                                               loc<-NULL
                                                                               next
                                                                           }
-            N<-length(purity)
+            N<-length(precision)
             for (a in 1:N){
-                loc[a,2]<-ifelse(abs,length(which(pur>=purity[a])),length(which(pur>=purity[a]))/length(sel))
+                loc[a,2]<-ifelse(abs,length(which(pur>=precision[a])),length(which(pur>=precision[a]))/length(sel))
 
             }
-            loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=max(loc[a,2])))
+            loc<-rbind(c(precision=1,ratio=0),loc,c(precision=0,ratio=max(loc[a,2])))
 
             res[[i]][[j]]<-loc
         }
@@ -580,8 +580,8 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
             try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="assigned_location"))
             levelsC<-levelsCo
             ##try(res<-addreplace.column(res,rID=i,score=score,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$purity_main_component,Nb_assigned_location=nbct,add2data=FALSE))
-            try(res<-addreplace.column(res,rID=i,purity_assigned_location=nbct/cls$Nb_of_annotations,add2data=TRUE))
+            try(res<-addreplace.column(res,rID=i,Nb_main_component=cls$Nb_of_annotations*cls$precision_main_component,Nb_assigned_location=nbct,add2data=FALSE))
+            try(res<-addreplace.column(res,rID=i,precision_assigned_location=nbct/cls$Nb_of_annotations,add2data=TRUE))
             ctexist<-TRUE
         }
     }
@@ -591,7 +591,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
 
 
 
-    if (ctexist) ord<-order(cls$assigned_location,-cls$Nb_assigned_location, -cls$purity_assigned_location) else ord<-order(cls$main_component,-cls$Nb_main_component, -cls$purity_main_component)
+    if (ctexist) ord<-order(cls$assigned_location,-cls$Nb_assigned_location, -cls$precision_assigned_location) else ord<-order(cls$main_component,-cls$Nb_main_component, -cls$precision_main_component)
     res<-order.AM(res,ordering=ord)
     data<-get.data(res)
     ord<-order(data$updated_order)
@@ -690,7 +690,7 @@ categorize_cluster<-function(cls){
     ss<-which(res %in% c("LYSOSOME","ENDOSOME"))
     if (length(ss)>0) res[ss]<-"LYSOSOME&ENDOSOME"
     ss<-which(is.na(counts))
-    counts[ss]<-cls$Nb_of_annotations[ss]*cls$purity_main_component[ss]
+    counts[ss]<-cls$Nb_of_annotations[ss]*cls$precision_main_component[ss]
     return(list(res,counts))
 
 }
