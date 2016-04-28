@@ -125,7 +125,7 @@ R. In this case three files will be created in the working directory.
     cluster assignment and purity with respect to the most abundant component
     \item name\_pr.pdf - precision-recall curves of the
       cluster assignment with respect to all used annotations
-       \item name\_pr_abs.pdf - number of assigned proteins versus the
+       \item name\_pr\_abs.pdf - number of assigned proteins versus the
          purity of clusters with respect given localization
       \item name\_javatree.cdt - heatmap to be visualized in the Java
         TreeView application. Each line is annotated by the protein
