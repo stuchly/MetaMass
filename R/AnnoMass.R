@@ -363,7 +363,7 @@ roc.AM1<-function(AM,rID=NULL,component=NULL){
     return(reso)
 }
 
-roc.AM<-function(AM,rID=NULL,component=NULL){
+roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
     if (is.null(rID)) rID<-1:length(AM$annotation$components)
     dd<-get.data(AM)
 
@@ -401,7 +401,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
                                                                           }
             N<-length(purity)
             for (a in 1:N){
-                loc[a,2]<-length(which(pur>=purity[a])) /length(sel)
+                loc[a,2]<-ifelse(abs,length(which(pur>=purity[a])),length(which(pur>=purity[a]))/length(sel))
 
             }
             loc<-rbind(c(purity=1,ratio=0),loc,c(purity=0,ratio=max(loc[a,2])))
@@ -419,25 +419,27 @@ roc.AM<-function(AM,rID=NULL,component=NULL){
 
 
 
-plot.prAM<-function(rocAM){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
+plot.prAM<-function(rocAM,abs=FALSE){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
     ## par(mfrow=mfrow,mar=mar)
-
-    if (class(rocAM)!="rocAM") {if (class(rocAM)=="AnnoMass") rocAM<-roc.AM(rocAM) else stop()}
+    Recall<-ifelse(abs,"Number of classified proteins","Recall")
+    if (class(rocAM)!="rocAM") {if (class(rocAM)=="AnnoMass") rocAM<-roc.AM(rocAM,abs=abs) else stop()}
     annotation<-rocAM[[1]]
     rocAM<-rocAM[[2]]
+    ord<-order(names(rocAM))
+    rocAM<-rocAM[ord]
     for(i in 1:length(rocAM)){
 
         for (jj in 1:(length(rocAM[[i]]))) if (!is.null(rocAM[[i]][[jj]])) break
         if (is.null(rocAM[[i]][[jj]])) next
         xlm1<-max(as.numeric(unlist(rocAM[[i]])),na.rm=TRUE)
-        plot(rocAM[[i]][[jj]][,c(2,1)],type="l",col=jj,lty=jj,xlim=c(0,xlm1),ylim=c(0,1),main=names(rocAM)[i],xlab="Recall",ylab="Precision")
+        plot(rocAM[[i]][[jj]],type="l",col=jj,lty=jj,ylim=c(0,xlm1),xlim=c(0,1),main=names(rocAM)[i],ylab=Recall,xlab="Precision")
         K<-length(rocAM[[i]])
         legend("bottomleft",legend=paste(annotation),lty=1:K,col=1:K,cex=1)
         if (length(rocAM[[i]])<=jj) next
 
         for (j in (jj+1):length(rocAM[[i]])){
 
-            lines(rocAM[[i]][[j]][,c(2,1)],col=j,lty=j)
+            lines(rocAM[[i]][[j]],col=j,lty=j)
 
         }
     }
@@ -450,6 +452,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
     if (!is.null(output)){
         output.data<-paste(output,"_table.txt",sep="")
         output.roc<-paste(output,"_pr.pdf",sep="")
+        output.roc_abs<-paste(output,"_pr_abs.pdf",sep="")
         output.cdt<-paste(output,"_javatree.cdt",sep="")
     } else output.data<-output.roc<-output.cdt<-NULL
     if (is.null(Annotation)){
@@ -606,6 +609,11 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         par(mfrow=c(2,2),cex=0.5)
         plot.prAM(res)
         dev.off()
+        pdf(output.roc_abs)
+        par(mfrow=c(2,2),cex=0.5)
+        plot.prAM(res,abs=TRUE)
+        dev.off()
+
 
     }
     return(invisible(res))
