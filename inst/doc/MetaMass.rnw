@@ -37,7 +37,7 @@ The presented package provides tools for meta-analysis of human proteome mass sp
 analyzing text files or \texttt{data.frame} with an integration
 with R for further analysis.
 \\
-Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and purity scores and precision-recall curves that provide information about the fit between the dataset and the marker set.
+Area of usage: MetaMass is a tool for meta-analysis of sub-cellular proteomics data (ref Lund-Johansen et al 2016). Users can analyze  mass spectrometry (MS) data  within the context of published datasets and sets of markers identified by mining of MS datasets or curated annotations from Uniprot, GO and the Human Protein Atlas. The input is text files with official human gene symbols as protein identifiers and normalized MS signal values measured in sub-cellular fractions. The output is a cdt file for visualization of the classified datasets as heatmaps in JavaTreeView, a table with with gene names, annotations, assigned locations and precision scores and precision-recall curves that provide information about the fit between the dataset and the marker set.
 
 \noindent Required software:
 \begin{itemize}
@@ -122,11 +122,11 @@ R. In this case three files will be created in the working directory.
 \begin{itemize}
   \item name\_table.txt - spreadsheet containing the analyzed data and
     all annotations used (see below) for the analysis together the
-    cluster assignment and purity with respect to the most abundant component
+    cluster assignment and precision with respect to the most abundant component
     \item name\_pr.pdf - precision-recall curves of the
       cluster assignment with respect to all used annotations
        \item name\_pr\_abs.pdf - number of assigned proteins versus the
-         purity of clusters with respect given localization
+         precision of clusters with respect given localization
       \item name\_javatree.cdt - heatmap to be visualized in the Java
         TreeView application. Each line is annotated by the protein
         ID, annotation (Annot=;if present for this protein) and
