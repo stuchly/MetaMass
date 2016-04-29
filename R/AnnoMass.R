@@ -240,9 +240,10 @@ write.cdt<-function(AM,file="results.cdt",annotation=FALSE,rsID=1){
     AM$data$data[,1]<-as.character(AM$data$data[,1])
     dd<-AM$data$data
     dd<-data.frame(dd,ord=1:nrow(dd))
-    dd<-merge(AM$annotation$annotation,dd,by.x=AM$annotation$ID,by.y=AM$data$ID)
+    dd<-merge(AM$annotation$annotation,dd,by.x=AM$annotation$ID,by.y=AM$data$ID,all.y=TRUE)
     ord<-order(dd$ord)
     Annot<-dd[ord,AM$annotation$components.col[rsID]]
+    ##AM$data$data<-dd
     if (length(grep("assigned_location",colnames(AM$data$data)))>0) AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Marker=",Annot,"Assign=",AM$data$data[,paste("assigned_location",rsID,sep="_")]) else AM$data$data[,1]<-paste(AM$data$data[,1],AM$data$data$clusters,"Marker=",Annot,"Assign=",AM$data$data[,paste("main_component",rsID,sep="_")])
     data<-AM$data$data
     data.cols<-AM$data$data.cols
@@ -529,7 +530,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         } else {
             if (cluster.metadata)  group<-c(1:ngroups,group+ngroups) else group<-group+ngroups
         }
-        print(group)
+        ## print(group)
 
     }
 
