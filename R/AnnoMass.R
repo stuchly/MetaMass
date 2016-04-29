@@ -50,6 +50,7 @@ construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.comp
     groups[[ngroups]]<-c(start,length(data.cols))
 
     present<-matrix(1,ncol=ngroups,nrow=nrow(data))
+    if (meta_gr>1) present[,c(1:(meta_gr-1))]<-0
     if (!is.null(group_names)){
         if (length(groups)!=length(group_names)) stop("Nb of groups and group names differ")
         colnames(present)<-names(groups)<-group_names
@@ -281,7 +282,7 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         } else {
             Annot_out<-AM$annotation$annotation[,c(AM$annotation$ID,AM$annotation$components.col)]
         }
-        return(merge(Annot_out,cbind(AM$data$data[,ss[-s1p]],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID,all.x=TRUE))
+        return(merge(Annot_out,cbind(AM$data$data[,ss[-s1p]],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID,all.y=TRUE))
     }
     if (!annotation) {
         if (data.only){
@@ -530,6 +531,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         } else {
             if (cluster.metadata)  group<-c(1:ngroups,group+ngroups) else group<-group+ngroups
         }
+        if (cluster.metadata) meta_gr<-1
         ## print(group)
 
     }
@@ -541,7 +543,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         MSFc[is.na(MSFc)]<-1
         MSfile[,cc]<-MSFc
     }
-
+    print(meta_gr)
 
     AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
