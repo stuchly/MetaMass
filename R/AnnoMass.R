@@ -57,8 +57,10 @@ construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.comp
 
     for (i in meta_gr:ngroups){
         cls<-c(groups[[i]][1]:groups[[i]][2])
+        ## print(cls)
         ss<-rowSums(data[,data.cols[cls]])
         selNA<-which(ss==length(cls))
+
         present[selNA,i]<-0
 
 
@@ -121,9 +123,11 @@ run.annotation<-function(AM,method="kmeans",metric="correlation",clusters=60,ite
             grS<-c(grS,c(AM$data$groups[[i]][1]:AM$data$groups[[i]][2]))
         }
     }
-
+    ## print(colnames(AM$data$data[sel,AM$data$data.cols[grS]]))
     if (is.null(grS)) grS<-1:length(AM$data$data.cols)
+
     if (!is.null(subset)) sel<-subset
+
     if (length(sel)==0) stop("No annotated protein ID in data")
 
     message("Clustering...")
@@ -513,7 +517,9 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         MSdata.cols<-which(sapply(MSfile,is.numeric))
         jumps<-which(diff(MSdata.cols)>1)
         ngroupsMS<-length(jumps)+1
-        meta_gr<-ngroupsMS
+        meta_gr<-length(which(diff(which(sapply(Metadata,is.numeric)))>1))+2
+
+
         if(is.null(group)) group<-1:ngroupsMS
 
         MSfile<-merge(data.frame(Metadata,non_NUM_space="-"),MSfile,by.x=2,by.y=1,all.x=all_ov,all.y=all_ov)
@@ -523,7 +529,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         } else {
             if (cluster.metadata)  group<-c(1:ngroups,group+ngroups) else group<-group+ngroups
         }
-
+        print(group)
 
     }
 
