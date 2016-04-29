@@ -543,13 +543,20 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         MSFc[is.na(MSFc)]<-1
         MSfile[,cc]<-MSFc
     }
-    print(meta_gr)
 
-    AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
+
+    AM<<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
     if (all_ov){
         pres<-rowSums(get.presence(AM))
         subset<-which(pres>=overlap)
+    } else {
+        subset<-1:nrow(AM$data$data)
+    }
+
+    if(is.null(clusters)){
+        clusters<-length(subset)%/%5
+        message("Setting number of clusters to ", clusters)
     }
     res<-run.annotation(AM,clusters=clusters,method=method,metric=metric,iter.max=iter.max,nstart=nstart,group=group,subset=subset)
 

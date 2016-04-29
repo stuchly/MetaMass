@@ -35,7 +35,8 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,da
   \item{group_names}{optional. character vector with names of the
     studies in the MSfile(s). See details}
 
-  \item{clusters}{positive integer. Number of clusters to be created.}
+  \item{clusters}{positive integer or NULL. Number of clusters to be
+  created. If NULL number of clusters is estimated as nrow(Data)%/%5}
 
   \item{output}{character. prefix of files where the results will be stored.
     output files:
