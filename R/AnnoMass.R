@@ -169,7 +169,7 @@ run.annotation<-function(AM,method="kmeans",metric="correlation",clusters=60,ite
 
         colnames(incMat)<-AM$annotation$components[[i]]
 
-        resData<-merge(AM$annotation$annotation,AM$data$data,by.x=AM$annotation$ID,by.y=AM$data$ID,all.y=TRUE)
+        resData<-merge(AM$annotation$annotation,AM$data$data,by.x=AM$annotation$ID,by.y=AM$data$ID)
 
         TP.FP<-rep(NA,clusters)
         for (fr in AM$annotation$components[[i]]){
