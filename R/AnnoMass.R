@@ -277,11 +277,11 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
             Annot_out<-AM$annotation$annotation[,c(colnames(AM$annotation$annotation)[1],AM$annotation$ID,AM$annotation$components.col)]
             data(full_text_annotation,envir =  environment())
             Annot_out<-merge(Annot_out,full_text_annotation[,-2],by.x=1,by.y=1,all.x=TRUE)[,-1]
-            AA<<-Annot_out
+
         } else {
             Annot_out<-AM$annotation$annotation[,c(AM$annotation$ID,AM$annotation$components.col)]
         }
-        return(merge(Annot_out,cbind(AM$data$data[,ss[-s1p]],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID))
+        return(merge(Annot_out,cbind(AM$data$data[,ss[-s1p]],AM$data$data[,-ss]),by.x=AM$annotation$ID,by.y=AM$data$ID,all.x=TRUE))
     }
     if (!annotation) {
         if (data.only){
@@ -291,11 +291,11 @@ get.data<-function(AM,annotation=TRUE,data.only=FALSE,out=FALSE,fulltext=FALSE){
         } else {return(AM$data$data)}
     }  else {
         if (data.only){
-            out<-cbind(AM$data$data[,AM$data$ID],cluster=AM$data$data$updated_order,AM$data$data[,AM$data$data.cols])
+            out<-cbind(AM$data$data[,AM$data$ID],cluster=AM$data$data$clusters,AM$data$data[,AM$data$data.cols])
             colnames(out)[1]<-AM$data$ID
-            return(merge(AM$annotation$annotation,out,by.x=AM$annotation$ID,by.y=AM$data$ID))}
+            return(out)}
         else {
-            return(merge(AM$annotation$annotation,AM$data$data,by.x=AM$annotation$ID,by.y=AM$data$ID))
+            return(merge(AM$annotation$annotation,AM$data$data,by.x=AM$annotation$ID,by.y=AM$data$ID,all.y=TRUE))
         }
 
     }
