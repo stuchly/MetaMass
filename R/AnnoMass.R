@@ -395,8 +395,8 @@ roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
             cls<-get.clusters(AM,rID=j)
             ##sel<-which(dd[,paste("main_component",j,sep="_")]==i)
 
-            sel<-which(dd[,AM$annotation$components.col[j]]==i)
-
+            if (!abs) sel<-which(dd[,AM$annotation$components.col[j]]==i)
+            if (abs) sel<-which(dd[,paste("assigned_location",j,sep="_")]==i)
             ## pur<-cls$precision_main_component[dd$clusters[sel]]
             if (is.null(cls[dd$clusters[sel],"precision_assigned_location"])) next else pur<-cls[dd$clusters[sel],"precision_assigned_location"]
             precision<-sort(unique(pur),decreasing=TRUE)
@@ -615,7 +615,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
 
     if (!is.null(output.cdt)) write.cdt(res,file=output.cdt)
 
-    if (!is.null(output.roc)){
+    if (!is.null(output.roc_abs)){
 
         if (ctexist) Categ<-"assigned_location" else Categ<-"main_component"
         dd<-get.data(res)
