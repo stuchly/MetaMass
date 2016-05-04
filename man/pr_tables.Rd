@@ -19,6 +19,6 @@ file1<-system.file("extdata","Data_Fig_1a.txt",package="MetaMass")
 file1
 
 res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",markers=c(3:5))
-pr_tables(re1,output="prtables.txt")
+pr_tables(res1,output="prtables.txt")
 
 }
