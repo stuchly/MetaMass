@@ -9,7 +9,7 @@ plot.prAM(AM,abs=FALSE)
 }
 \arguments{
   \item{AM}{AnnoMass object. Result of function analyze.MSfile}
-  \item{abs} {logical; plot number of assigned proteins instead of recall}
+  \item{abs}{logical; plot number of assigned proteins instead of recall}
 }
 \details{This function evaluates clustering performance via
   precision-recall curves with respect to the

@@ -10,7 +10,7 @@ pr_tables(AM,output)
 }
 \arguments{
   \item{AM}{AnnoMass object. Result of function analyze.MSfile}
-  \item{ouput} {character; saves the tables in 2 files - recall_output and assigned_proteins_output}
+  \item{ouput}{character; saves the tables in 2 files - recall_output and assigned_proteins_output}
 }
 \details{}
 \value{invisible list of data.frames}
