@@ -16,7 +16,7 @@ merge.MSfiles(MSfiles,,by=1,all=TRUE,sep="\t")
 }
 
 \value{
-  data.frame. One line per protein.
+ invisible data.frame. One line per protein.
 
 }
 
