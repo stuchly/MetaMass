@@ -24,5 +24,5 @@ merge.MSfiles(MSfiles,,by=1,all=TRUE,sep="\t")
 \examples{
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 
-res<-merge.MSfiles(files1)
+res<-merge.MSfiles(files1,output="merged_files.txt")
 }
