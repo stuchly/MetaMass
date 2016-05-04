@@ -633,6 +633,8 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
         MSFc<-MSfile[,cc]
         MSFc[is.na(MSFc)]<-1
         MSfile[,cc]<-MSFc
+        nonnum<-sapply(MSfile,function(x) if (is.factor(x)) return(levels(x)=="-") else return(FALSE))
+        MSfile[,nonnum]<-"-"
     }
 
 
