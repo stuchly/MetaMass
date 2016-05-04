@@ -1,3 +1,59 @@
+merge.MSfiles<-function(MSfiles,by=1,all=TRUE,sep="\t",output=NULL){
+
+    res<-read.table(MSfiles[1],header=TRUE,stringsAsFactors=FALSE,sep=sep,comment.char="")
+
+    if (length(MSfiles)>1){
+          if (any(duplicated(res[,by]))){
+              warning("Duplicated IDs are not alowed for multiple files. Duplicated IDs are removed.")
+              res<-res[-which(duplicated(res[,by])),]
+          }
+          for (i in 2:length(MSfiles)){
+              resloc<-read.table(MSfiles[i],header=TRUE,stringsAsFactors=FALSE,sep=sep,comment.char="")
+              if (any(duplicated(resloc[,by]))){
+                  warning("Duplicated IDs are not alowed for multiple files. Duplicated IDs are removed.")
+                  resloc<-resloc[-which(duplicated(resloc[,by])),]
+              }
+              res<-merge(res,data.frame(non_NUM_space="-",resloc),by.x=by,by.y=by+1,all.x=all,all.y=all)
+          }
+    }
+
+    cols<-which(sapply(res,is.numeric))
+    resloc<-res[,cols]
+    resloc[is.na(resloc)]<-1
+    res[,cols]<-resloc
+    jumps<-which(diff(cols)>1)
+    ngroups<-length(jumps)+1
+
+    groups<-list()[1:ngroups]
+    start<-1
+    names(jumps)<-NULL
+
+    if (length(jumps)>0){
+        for (i in 1:length(jumps)){
+            groups[[i]]<-c(start,jumps[i])
+            start<-jumps[i]+1
+
+        }
+    }
+
+    groups[[ngroups]]<-c(start,length(cols))
+    present<-matrix(1,ncol=ngroups,nrow=nrow(res))
+
+    for (i in 1:ngroups){
+        cls<-c(groups[[i]][1]:groups[[i]][2])
+        ss<-rowSums(res[,cols[cls]])
+        selNA<-which(ss<=length(cls))
+        present[selNA,i]<-0
+     }
+
+    overlap<-rowSums(present)
+    nonnum<-sapply(res,function(x) if (is.factor(x)) return(levels(x)=="-") else return(FALSE))
+    res[,nonnum]<-"-"
+    res<-data.frame(res,overlap=paste("overlaps",overlap))
+    if (!is.null(output)) write.table(res,file=output,col.names=TRUE,row.names=FALSE,sep="\t")
+    return(invisible(res))
+}
+
 construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.component=3,group_names=NULL,meta_gr=1){
     colnames(data)<-paste("data",gsub("\\s","_",gsub("\\s+"," ",colnames(data))),sep="_")
     data.ID<-colnames(data)[data.ID]
@@ -60,13 +116,13 @@ construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.comp
         cls<-c(groups[[i]][1]:groups[[i]][2])
         ## print(cls)
         ss<-rowSums(data[,data.cols[cls]])
-        selNA<-which(ss==length(cls))
+        selNA<-which(ss<=length(cls))
 
         present[selNA,i]<-0
 
 
     }
-
+    data<-data.frame(data,overlap=paste("overlaps", rowSums(present)))
 
     res<-list(annotation=list(annotation=annotation,ID=annotation.ID,components=components,components.col=annotation.component),data=list(data=data,ID=data.ID,data.cols=data.cols,groups=groups,present=present))
     class(res)<-"AnnoMass"
@@ -368,7 +424,41 @@ roc.AM1<-function(AM,rID=NULL,component=NULL){
     class(reso)<-"rocAM"
     return(reso)
 }
+pr_table<-function(AM,output=NULL){
+    l1<-roc.AM(AM)
+    annotation<-l1[[1]]
+    l1<-l1[[2]]
+    l2<-roc.AM(AM,abs=TRUE)[[2]]
+    res1<-res2<-NULL
+    for (i in 1:length(l1)){
+        for (j in 1:length(annotation)){
+            tabloc<-NULL
+            if (!is.null(l1[[i]][[j]])){
+                tabloc<-l1[[i]][[j]]
+                colnames(tabloc)<-c("precission","recall")
+                tabloc<-data.frame(annotation=annotation[j],localisation=names(l1)[i],tabloc)
+            }
+            res1<-rbind(res1,tabloc)
 
+            tabloc<-NULL
+            if (!is.null(l1[[i]][[j]])){
+                tabloc<-l2[[i]][[j]]
+                colnames(tabloc)<-c("precission","number_of_assigned_proteins")
+                tabloc<-data.frame(annotation=annotation[j],localisation=names(l2)[i],tabloc)
+            }
+            res2<-rbind(res2,tabloc)
+
+
+        }
+    }
+    if(!is.null(output)){
+        write.table(res1,file=paste("recall",output,sep="_"),col.names=TRUE,row.names=FALSE,sep="\t")
+        write.table(res2,file=paste("assigned_proteins",output,sep="_"),col.names=TRUE,row.names=FALSE,sep="\t")
+
+    }
+    return(invisible(list(res1,res2)))
+
+}
 roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
     if (is.null(rID)) rID<-1:length(AM$annotation$components)
     dd<-get.data(AM)
@@ -406,6 +496,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
                                                                               next
                                                                           }
             N<-length(precision)
+
             for (a in 1:N){
                 loc[a,2]<-ifelse(abs,length(which(pur>=precision[a])),length(which(pur>=precision[a]))/length(sel))
 

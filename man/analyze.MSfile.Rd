@@ -42,7 +42,9 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,da
     output files:
     output_table.txt - annoataed data with cluster assignement
     ouput_javatree.cdt - heatmap for java treeview
-    output_pr.pdf -  Roc curves main_fraction will be saved. see ?plot.rocAM}
+    output_pr.pdf -  precision-recall curves. see ?plot.rocAM
+    otput_pr_abs.pdf - number of assigned proteins agains cluster precision
+  }
 
   \item{sep}{to specify a character which delimits fields. default is
     tab-delimited text.}
@@ -111,6 +113,4 @@ res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2")
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
 files1
 res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
-
-
 }
