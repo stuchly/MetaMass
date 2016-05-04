@@ -424,7 +424,7 @@ roc.AM1<-function(AM,rID=NULL,component=NULL){
     class(reso)<-"rocAM"
     return(reso)
 }
-pr_table<-function(AM,output=NULL){
+pr_tables<-function(AM,output=NULL){
     l1<-roc.AM(AM)
     annotation<-l1[[1]]
     l1<-l1[[2]]
