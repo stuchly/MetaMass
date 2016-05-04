@@ -6,7 +6,7 @@
  number_assigned_proteins agains precision. see ?plot.prAM
 }
 \usage{
-plot.prAM(AM,output)
+pr_tables(AM,output)
 }
 \arguments{
   \item{AM}{AnnoMass object. Result of function analyze.MSfile}
