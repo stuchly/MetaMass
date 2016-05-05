@@ -2,8 +2,8 @@
 \alias{pr_tables}
 \title{pr_tables}
 \description{
- exports the data.frames with points to plot precision-recall curves and
- number_assigned_proteins agains precision. see ?plot.prAM
+ exports the  points to plot precision-recall curves and
+ number_assigned_proteins agains precision in convenient form of 2 data.frames. see ?plot.prAM
 }
 \usage{
 pr_tables(AM,output)
