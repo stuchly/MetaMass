@@ -19,7 +19,7 @@ merge.MSfiles(MSfiles,,by=1,all=TRUE,sep="\t")
  invisible data.frame. One line per protein.
 
 }
-\details{one additional columns is added - overlap - which says in how
+\details{one additional column is added - overlap - which says in how
   many studies the particular protein was detected. The protein is
   considered detected if if if the value in at least one fraction in the
 study is greater than 1}
