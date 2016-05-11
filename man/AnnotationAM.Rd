@@ -18,9 +18,15 @@ AnnotationAM}
 
   [,4] annotations - Uniprot
 
-  [,5] annotations - G 0
+  [,5] annotations - G0
 
   [,6] annotations - HPA supportive
 
   [,7] annotations - HPA uncertain
+
+  [,8] annotations - Christoforu and Uniprot/G0 overlap
+
+  [,9] annotations - Uniprot G0 SUM
+
+  [,10] annotations - Uniprot G0 overlap
 }
