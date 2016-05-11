@@ -80,6 +80,7 @@ then processed with respect to following conventions:
       ID which match the annotation file (by default the genename in
       the first column;see below)
       \item by default tab-delimited text file is assumed
+      \item trailing spaces in character columns are removed
   \end{itemize}
   An annotation file is provided in the package
  \scriptsize
