@@ -1,3 +1,14 @@
+trim.trailing.spaces<-function(x){
+    .trim<-function(xx){
+        xx<-gsub(" $","",xx)
+        xx<-gsub("^ ","",xx)
+        return(xx)
+    }
+    message("Trimming trailing spaces")
+    for (i in 1:ncol(x)) x[[i]]<-.trim(x[[i]])
+
+    return(x)
+}
 merge.MSfiles<-function(MSfiles,by=1,all=TRUE,sep="\t",output=NULL){
 
     res<-read.table(MSfiles[1],header=TRUE,stringsAsFactors=FALSE,sep=sep,comment.char="")
@@ -55,6 +66,7 @@ merge.MSfiles<-function(MSfiles,by=1,all=TRUE,sep="\t",output=NULL){
 }
 
 construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.component=3,group_names=NULL,meta_gr=1){
+    annotation<-trim.trailing.spaces(annotation)
     colnames(data)<-paste("data",gsub("\\s","_",gsub("\\s+"," ",colnames(data))),sep="_")
     data.ID<-colnames(data)[data.ID]
     if(any(duplicated(data[,data.ID]))) warning("Protein IDs duplicated in MS data.frame")
@@ -638,7 +650,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
     }
 
 
-    AM<<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
+    AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
     if (all_ov){
         pres<-rowSums(get.presence(AM))
