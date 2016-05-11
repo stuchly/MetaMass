@@ -4,8 +4,9 @@ trim.trailing.spaces<-function(x){
         xx<-gsub("^ ","",xx)
         return(xx)
     }
+    char.cols<-which(sapply(x,is.character))
     message("Trimming trailing spaces")
-    for (i in 1:ncol(x)) x[[i]]<-.trim(x[[i]])
+    for (i in char.cols) x[[i]]<-.trim(x[[i]])
 
     return(x)
 }
@@ -67,6 +68,7 @@ merge.MSfiles<-function(MSfiles,by=1,all=TRUE,sep="\t",output=NULL){
 
 construct.AM<-function(annotation,data,annotation.ID=1,data.ID=1,annotation.component=3,group_names=NULL,meta_gr=1){
     annotation<-trim.trailing.spaces(annotation)
+    data<-trim.trailing.spaces(data)
     colnames(data)<-paste("data",gsub("\\s","_",gsub("\\s+"," ",colnames(data))),sep="_")
     data.ID<-colnames(data)[data.ID]
     if(any(duplicated(data[,data.ID]))) warning("Protein IDs duplicated in MS data.frame")
