@@ -682,7 +682,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
             ss<-which(!is.na(presentCOMP))
             presentCOMP<-presentCOMP[ss]
             ss<-which(levelsC %in% res$results$clusters[[i]][,"main_component"])
-            try(res<-set.components(res,rID=i,components=c(levelsC[ss],presentCOMP),col="main_component"))
+            try(res<-set.components(res,rID=i,components=c(levelsC[ss],sort(presentCOMP)),col="main_component"))
             cls<-get.clusters(res,rID=i)
             try(categ<-categorize_cluster(cls))
             try(nbct<-categ[[2]])
@@ -763,6 +763,7 @@ categorize_cluster<-function(cls){
     if (is.null(cls$CS_ratio)) cls$CS_ratio<-0
     if (is.null(cls$GOLGI_ratio)) cls$GOLGI_ratio<-0
     if (is.null(cls$NUCLEOLUS_ratio))  cls$NUCLEOLUS_ratio<-0
+     if (is.null(cls$NUCLEUS_ratio))  cls$NUCLEUS_ratio<-0
     if (is.null(cls$PM_ratio)) cls$PM_ratio<-0
     if (is.null(cls$ER_ratio)) cls$ER_ratio<-0
     if (is.null(cls$CYTOSOL_ratio)) cls$CYTOSOL_ratio<-0

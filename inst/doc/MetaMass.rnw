@@ -113,6 +113,27 @@ considered as MS data as follows
 colnames(data_table)[sapply(data.table,is.numeric)]
 @ %def
 \normalsize
+\subsection{Custom Annotation file}
+By default the marker sets in data.frame \texttt{AnnotationAM} are
+used however the user can provide a custom Annotation file which meets
+the following conventions
+
+\begin{itemize}
+  \item the file is tab-delimited (by default)
+  \item the first column contains the Uniprot IDs
+    \item the localisations identifiers must be empty string or syntactically valid
+      names (i.e. a string which consists of letters, numbers, and the dot and (for versions of R at least 1.9.0) underscore characters, and starts with either a letter or a dot not followed by a number. Reserved words are not syntactic names)
+  \end{itemize}
+  The localisations will be sorted in the following order
+  \scriptsize
+@
+<<>>=
+data(levelsC)
+levelsC
+@ %def
+\normalsize
+and the localisations not present in \texttt{levelsC} will be sorted
+  in lexicographical order after those present in \texttt{levelsC}.
 \section{Output}
 By default (with parameter \texttt{output=NULL}) the user level function
 \texttt{analyze.MSfile} does not create any files in the working
