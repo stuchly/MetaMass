@@ -764,6 +764,7 @@ categorize_cluster<-function(cls){
     if (is.null(cls$GOLGI_ratio)) cls$GOLGI_ratio<-0
     if (is.null(cls$NUCLEOLUS_ratio))  cls$NUCLEOLUS_ratio<-0
     if (is.null(cls$PM_ratio)) cls$PM_ratio<-0
+    if (is.null(cls$ER_ratio)) cls$ER_ratio<-0
     if (is.null(cls$CYTOSOL_ratio)) cls$CYTOSOL_ratio<-0
     ##if (is.null(cls$CYTOSOL_ratio)) print(cls)
     if(is.null(cls$MITOCHONDRION_ratio)) cls$MITOCHONDRION_ratio<-0
