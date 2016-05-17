@@ -5,11 +5,13 @@
  creates ROC curve of annotated clusters with respect to all used annoations.
 }
 \usage{
-plot.prAM(AM,abs=FALSE)
+plot.prAM(AM,abs=FALSE,legend.position="bottomleft")
 }
 \arguments{
   \item{AM}{AnnoMass object. Result of function analyze.MSfile}
-  \item{abs}{logical; plot number of assigned proteins instead of recall}
+  \item{abs}{logical; plot number of assigned proteins instead of
+    recall}
+  \item{legend.position}{character; see details in ?legend}
 }
 \details{This function evaluates clustering performance via
   precision-recall curves with respect to the
