@@ -5,7 +5,7 @@
   Annotates MS data file with respect cellular localisation
 }
 \usage{
-analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,data.ID=2,markers=3,group_names=NULL,clusters=NULL,output.data="annotated_data.txt",output.cdt="heatmap.cdt",output.roc="roc.pdf",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=NULL)}
+analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,data.ID=2,markers=3,group_names=NULL,clusters=NULL,output.data="annotated_data.txt",output.cdt="heatmap.cdt",output.roc="roc.pdf",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=2)}
 \arguments{
   \item{MSfile}{data.frame or character vector of path to the text
     file(s) with MS data. See details.}

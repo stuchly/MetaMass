@@ -557,7 +557,7 @@ plot.prAM<-function(rocAM,abs=FALSE,legend.position="bottomleft"){  ##,mfrow=c(1
 
 }
 
-analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=NULL,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=NULL){
+analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=NULL,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=2){
     annotation.component<-markers
     all_ov<-ifelse(is.null(overlap),FALSE,TRUE)
     if (!is.null(output)){
@@ -654,7 +654,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
 
     AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
-    if (all_ov){
+    if (all_ov & (ncol(get.presence(AM))>=ovelap)){
         pres<-rowSums(get.presence(AM))
         subset<-which(pres>=overlap)
     } else {
