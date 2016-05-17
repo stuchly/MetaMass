@@ -530,7 +530,7 @@ roc.AM<-function(AM,rID=NULL,component=NULL,abs=FALSE){
 
 
 
-plot.prAM<-function(rocAM,abs=FALSE){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
+plot.prAM<-function(rocAM,abs=FALSE,legend.position="bottomleft"){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1)
     ## par(mfrow=mfrow,mar=mar)
     Recall<-ifelse(abs,"Number of classified proteins","Recall")
     if (class(rocAM)!="rocAM") {if (class(rocAM)=="AnnoMass") rocAM<-roc.AM(rocAM,abs=abs) else stop()}
@@ -545,7 +545,7 @@ plot.prAM<-function(rocAM,abs=FALSE){  ##,mfrow=c(1,1),mar=c(1, 4, 2.2, 1) + 0.1
         xlm1<-max(as.numeric(unlist(rocAM[[i]])),na.rm=TRUE)
         plot(rocAM[[i]][[jj]],type="l",col=jj,lty=jj,ylim=c(0,xlm1),xlim=c(0,1),main=names(rocAM)[i],ylab=Recall,xlab="Precision")
         K<-length(rocAM[[i]])
-        legend("bottomleft",legend=paste(annotation),lty=1:K,col=1:K,cex=1)
+        legend(legend.position,legend=paste(annotation),lty=1:K,col=1:K,cex=1)
         if (length(rocAM[[i]])<=jj) next
 
         for (j in (jj+1):length(rocAM[[i]])){
