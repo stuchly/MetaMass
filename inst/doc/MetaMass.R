@@ -173,7 +173,7 @@ res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",ov
 ###################################################
 pdf('roc2.pdf')
 par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
-plot.prAM(res3) #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
+plot.prAM(res3,legend.position="topleft") #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
 dev.off()
 
 
