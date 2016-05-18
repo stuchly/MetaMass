@@ -1,5 +1,5 @@
 .onLoad<-function(...){
-    packageStartupMessage("This package contains detailed walkthrough for the current version.\nUse command\nvignette(\"MetaMass\")")
+    packageStartupMessage("This package contains detailed walkthrough for the current version.\nUse command:\nvignette(\"MetaMass\")")
 }
 trim.trailing.spaces<-function(x){
     .trim<-function(xx){
