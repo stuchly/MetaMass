@@ -654,7 +654,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
 
     AM<-construct.AM(Annotation,MSfile,annotation.ID=annotation.ID,data.ID=data.ID,annotation.component=annotation.component,group_names=group_names,meta_gr=meta_gr)
 
-    if (all_ov & (ncol(get.presence(AM))>=ovelap)){
+    if (all_ov & (ncol(get.presence(AM))>=overlap)){
         pres<-rowSums(get.presence(AM))
         subset<-which(pres>=overlap)
     } else {
