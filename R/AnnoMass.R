@@ -1,3 +1,7 @@
+.onLoad<-function(...){
+    packageStartupMessage("message from .onAttach via
+packageStartupMessage\n")
+}
 trim.trailing.spaces<-function(x){
     .trim<-function(xx){
         xx<-gsub(" $","",xx)

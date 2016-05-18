@@ -1,9 +1,2 @@
 export(construct.AM,run.annotation,order.AM,write.cdt,get.data,get.clusters,set.components,cluster.groups,get.presence,roc.AM,analyze.MSfile,addreplace.column,plot.prAM,pr_tables,merge.MSfiles)
-.onLoad <- function(...) {
-      cat("message from .onLoad via cat\n")
-      message("message from .onLoad via message")
-      packageStartupMessage("message from .onLoad via
-packageStartupMessage\n")
-}
-
 
