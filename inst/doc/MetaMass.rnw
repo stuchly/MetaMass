@@ -213,8 +213,10 @@ proteins that are identified both in the dataset and the metadata
 (\textcolor{red}{Edit: the behavior has changed in current
   version. The \texttt{overlap} parameter affects now only data used
   for clustering i.e. the presence of protein in Metadata is not
-  checked unless \texttt{cluster.metdata=TRUE}}
-Clusters: number of clusters to generate in K-means clustering. (an average cluster size of 5 is recommended)
+  checked unless \texttt{cluster.metdata=TRUE}. For desired behavior
+  set \texttt{overlap=NULL} which is default - see \hyperref[ex2]{Example 2}}
+Clusters: number of clusters to generate in K-means clustering. (an
+average cluster size of 5 is recommended which is default)
 Annotation: Text file with marker lists, number corresponds to column number in the file. Markers: c(3,4,7) use marker sets in columns 3,4, and 7 in the annotation list.
 output: file-prefix for the output files.
 \\
@@ -390,7 +392,7 @@ MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 
 ##cluster with respect MSfile only (cluster.metadata=FALSE by default)
 library(MetaMass)
-analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = MyMarkers,
+analyze.MSfile(MSfile = file2,Metadata = "Christoforou", clusters = 1400, Annotation = MyMarkers,
 markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
