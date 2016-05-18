@@ -55,14 +55,15 @@ of heatmaps (the .cdt files - see below)
 %% load MetaMass: \texttt{library(MetaMass)}
 %% see this vignette: \texttt{vignette("MetaMass")
 \scriptsize
-@
-<<eval=false>>=
-install.packages("devtools") ##  Install devtools from R
-library(devtools) ## load devtools
-install_github("stuchly/MetaMass") ## Install MetaMass
-library(MetaMass) ## load MetaMass
-vignette("MetaMass") ## see this vignette
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> install.packages("devtools") ##  Install devtools from R
+> library(devtools) ## load devtools
+> install_github("stuchly/MetaMass") ## Install MetaMass
+> library(MetaMass) ## load MetaMass
+> vignette("MetaMass") ## see this vignette
+\end{Sinput}
+\end{Schunk}
 \normalsize
 \section{Input}
  On input user provides a
@@ -84,21 +85,47 @@ then processed with respect to following conventions:
   \end{itemize}
   An annotation file is provided in the package
  \scriptsize
-<<>>=
-library(MetaMass)
-data(AnnotationAM)
-head(AnnotationAM)
-@
+\begin{Schunk}
+\begin{Sinput}
+> library(MetaMass)
+> data(AnnotationAM)
+> head(AnnotationAM)
+\end{Sinput}
+\begin{Soutput}
+  Uniprot   Gene Christoforou_Uniprot_G.O_overlap Christoforou_Uniprot_G.O_sum
+1  P04217   A1BG                                                              
+2  Q9NQ94   A1CF                                                              
+3  P01023    A2M                                                              
+4  A8K2U0  A2ML1                                                              
+5  Q9NPC4 A4GALT                            Golgi                        Golgi
+6  Q9UNA3  A4GNT                            Golgi                        Golgi
+  HPA_Single_supportive HPA_Single_uncertain HPA_main_supportive
+1                                                               
+2               Nucleus                                  Nucleus
+3                                                               
+4                                                               
+5                                                               
+6                                                               
+  HPA_main_uncertain ChristoforouUniprot_G.Ooverlap_CMN
+1                                                      
+2                                                      
+3                                                      
+4                                                      
+5                                              membrane
+6                                              membrane
+\end{Soutput}
+\end{Schunk}
 \normalsize
 \subsection{Troubleshooting}
 The common challenge for new users of R is data import. The function
 \texttt{analyze.MSfile} expects tab-delimited file which could be
 read via function \texttt{read.table()}
 \scriptsize
-@
-<<eval=false>>=
-data_table<-read.table(filename,header=TRUE,sep="\t")
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> data_table<-read.table(filename,header=TRUE,sep="\t")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 If there is an error concerning reading the input file, the user can
 try this function to check if the file is in correct format.
@@ -108,10 +135,11 @@ mentioned above each contiguous sequence of numerical columns
 can check if all (and only) the data he wants to analyze would be
 considered as MS data as follows
 \scriptsize
-@
-<<eval=false>>=
-colnames(data_table)[sapply(data.table,is.numeric)]
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> colnames(data_table)[sapply(data.table,is.numeric)]
+\end{Sinput}
+\end{Schunk}
 \normalsize
 \subsection{Custom Annotation file}
 By default the marker sets in data.frame \texttt{AnnotationAM} are
@@ -126,11 +154,18 @@ the following conventions
   \end{itemize}
   The localisations will be sorted in the following order
   \scriptsize
-@
-<<>>=
-data(levelsC)
-levelsC
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> data(levelsC)
+> levelsC
+\end{Sinput}
+\begin{Soutput}
+ [1] "CYTOSOL"              "CS"                   "RIBOSOME"            
+ [4] "ENDOSOME"             "LYSOSOME"             "PM"                  
+ [7] "MEMBRANE"             "ER"                   "GOLGI"               
+[10] "MITOCHONDRION"        "NUCLEUS"              "EXTRACELLULAR_MATRIX"
+\end{Soutput}
+\end{Schunk}
 \normalsize
 and the localisations not present in \texttt{levelsC} will be sorted
   in lexicographical order after those present in \texttt{levelsC}.
@@ -163,11 +198,15 @@ The Metadata can be used as \texttt{data.frame} or if the user want to
 open then in a spreadsheet editor their location on the computer can
 be found via \texttt{system.file} function.
 \scriptsize
-@
-<<>>=
-filename<-system.file("extdata","Bileck.txt",package="MetaMass")
-filename
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> filename<-system.file("extdata","Bileck.txt",package="MetaMass")
+> filename
+\end{Sinput}
+\begin{Soutput}
+[1] "/Library/Frameworks/R.framework/Versions/3.2/Resources/library/MetaMass/extdata/Bileck.txt"
+\end{Soutput}
+\end{Schunk}
 \normalsize
 \section{Walk-through}
 In this section we give detailed description how create and analyze
@@ -184,14 +223,16 @@ Preparation of datasets and marker set for testing of the tool.
 
 \subsection{Analysis option 1}
 \label{opt1}
+see \hyperref[ex2]{Example 2}
 Generate the heatmap and the classification output files corresponding to Fig. 2a in the article:
 (typed commands are in script font, those below can be copied and pasted into R-studio, complete commands by pressing the enter key.)
 \scriptsize
-@
-<<eval=false>>=
-library(MetaMass)
-analyze.MSfile(MSfile = "Data_Fig2a.txt",Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = "MyMarkers.txt", markers =c(3,4,7), output = "Fig2a")
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> library(MetaMass)
+> analyze.MSfile(MSfile = "Data_Fig2a.txt",Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = "MyMarkers.txt", markers =c(3,4,7), output = "Fig2a")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 \begin{tip}
 Typing in R-Studio is greatly simplified using the tab key to
@@ -199,57 +240,57 @@ auto-complete the command.. Thus, the command above can be typed as
 follows:  ana [tab], msf [tab], “dat [tab], meta [tab],
 “Christoforou”), out [tab], “Fig1b”)
 \end{tip}
-Explanation: analyze.MSfile: name of function used to perform all the analyses.  
-MSfile: dataset to be analyzed, 
-Metadata (see \texttt{?Metadata}): The “Christoforou” dataset is one of several stored in MetaMass as reference data. A complete list is found in supplementary Table 1.10.  The meta-data is not clustered or used for the classification, but simply aligned to the processed test dataset as reference. Overlap=2 . The analysis is restricted to proteins that are identified both in the dataset and the metadata.  
+Explanation: analyze.MSfile: name of function used to perform all the analyses.
+MSfile: dataset to be analyzed,
+Metadata (see \texttt{?Metadata}): The “Christoforou” dataset is one of several stored in MetaMass as reference data. A complete list is found in supplementary Table 1.10.  The meta-data is not clustered or used for the classification, but simply aligned to the processed test dataset as reference. Overlap=2 . The analysis is restricted to proteins that are identified both in the dataset and the metadata.
 Clusters: number of clusters to generate in K-means clustering. (an average cluster size of 5 is recommended)
 Annotation: Text file with marker lists, number corresponds to column number in the file. Markers: c(3,4,7) use marker sets in columns 3,4, and 7 in the annotation list.
-output: file-prefix for the output files. 
-
-Result: The output files are found in the working directory. All output files have the prefix “Fig2a”. 
-Fig2a.cdt file is a heatmap  file (JavaTreeView), The algoritm generates a single heatmap corresponding to the first of the marker sets, in this case marker set 3. (Uniprot/GO overlap + study 1). 
+output: file-prefix for the output files.
+\\
+Result: The output files are found in the working directory. All output files have the prefix “Fig2a”.
+Fig2a.cdt file is a heatmap  file (JavaTreeView), The algoritm generates a single heatmap corresponding to the first of the marker sets, in this case marker set 3. (Uniprot/GO overlap + study 1).
 Fig.2a\_table.txt is the classification result table (open with e.g Excel). The table contains protein identifiers, annotations from HPA, Uniprot and GO, the location assigned by MetaMass and the precision. The table also contains the MS signal values.
-Fig2a\_pr-pdf contains precision-recall curves with relative numbers on the y-axis(e.g. Acrobat Reader). 
-Fig2a\_pr\_abs.pdf contain precision recall curves with absolute numbers on the y-axis. These numbers correspond to the number of mapped proteins. 
+Fig2a\_pr-pdf contains precision-recall curves with relative numbers on the y-axis(e.g. Acrobat Reader).
+Fig2a\_pr\_abs.pdf contain precision recall curves with absolute numbers on the y-axis. These numbers correspond to the number of mapped proteins.
 
 \subsection{Analysis option 2}
 \label{opt2}
+See \hyperref[ex4]{Example 4}
 Compare results obtained when datasets 4, 9 and 10 are analyzed, and
 study 1 is used as metadata, and vice versa.  (supplementary
 Fig. 14). Analyze dataset1, use dataset 4,9 and10, as Metadata.
 \scriptsize
-@
-<<eval=false>>=
-analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9), output = "study1_MyMark")
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9), output = "study1_MyMark")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 Analyze dataset 4,9 and 10, use dataset1 as Metadata
 \scriptsize
-@ 
-<<eval=false>>=
-analyze.MSfile(MSfile = "study4_9_10.txt",clusters = 473,Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
-@ %def 
+\begin{Schunk}
+\begin{Sinput}
+> analyze.MSfile(MSfile = "study4_9_10.txt",clusters = 473,Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 
-The heatmaps are shown in supplementary Fig. 14. The pie chart in the figure shows the frequency of proteins that were mapped to the same location, different locations, not mapped, and those that were mapped using one of the datasets only. Even though studies 4 9 and 11 used low resolution methods, 80\% of proteins that were mapped to a location in both analyses are mapped to the same locations as in study 1 when the data are combined. 
+The heatmaps are shown in supplementary Fig. 14. The pie chart in the figure shows the frequency of proteins that were mapped to the same location, different locations, not mapped, and those that were mapped using one of the datasets only. Even though studies 4 9 and 11 used low resolution methods, 80\% of proteins that were mapped to a location in both analyses are mapped to the same locations as in study 1 when the data are combined.
 \subsection{Analysis option 3}
 \label{opt3}
+See \hyperref[ex7]{Example 7}
 Compare heatmaps obtained when the data in Fig. 2a are analyzed using a wide range of marker sets from Uniprot, GO and the Human Protein Atlas  (supplementary Fig. 16)
 \scriptsize
-@
-<<eval=false>>=
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=9, clusters=1400, output = "Fig2aSVM")
-
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=4, clusters=1400, output = "Fig2aUGOovl")
-
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=3, clusters=1400, output = "Fig2aStudy1UGOovl")
-
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=6, clusters=1400, output = "Fig2aUniGOsum")
-
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=7, clusters=1400, output = "Fig2aHPAsupportive")
-
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=8, clusters=1400, output = "Fig2aHPAuncertain")
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=9, clusters=1400, output = "Fig2aSVM")
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=4, clusters=1400, output = "Fig2aUGOovl")
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=3, clusters=1400, output = "Fig2aStudy1UGOovl")
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=6, clusters=1400, output = "Fig2aUniGOsum")
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=7, clusters=1400, output = "Fig2aHPAsupportive")
+> analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=8, clusters=1400, output = "Fig2aHPAuncertain")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 %% \subsection{Analysis option 4}
 %% \label{opt4}
@@ -299,16 +340,67 @@ The function \texttt{analyze.MSfile} returns named list containing the
 original data, annotation(s) and cluster assignments. Two function
 can be used to extract it's contents - see \texttt{?get.data} and \texttt{?get.clusters}.
 \scriptsize
-@
-<<>>=
-file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
-
-##cluster with respect MSfile only (cluster.metadata=FALSE by default)
-res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2",markers=c(3:5))
-data2<-get.data(res2,data.only=TRUE)
-cls2_1<-get.clusters(res2,rID=1) #rID=1 annotation with respect to markers[1]; default
-head(cls2_1)
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
+> ##cluster with respect MSfile only (cluster.metadata=FALSE by default)
+> res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2",markers=c(3:5))
+> data2<-get.data(res2,data.only=TRUE)
+> cls2_1<-get.clusters(res2,rID=1) #rID=1 annotation with respect to markers[1]; default
+> head(cls2_1)
+\end{Sinput}
+\begin{Soutput}
+  cluster GOLGI CYTOSOL ER MITOCHONDRION NUCLEUS PM LYSOSOME PEROXISOME CS
+1       1     0       0  0             0       0  1        0          0  0
+2       2     0       0  2             0       1  0        0          0  0
+3       3     0       0  0             0       2  0        0          0  0
+4       4     0       1  0             0       0  0        0          0  1
+5       5     0       0  3             1       0  0        1          0  0
+6       6     0       1  0             0       0  0        0          0  0
+  ENDOSOME EXTRACELLULAR RIBOSOME Nb_of_annotations precision_main_component
+1        0             0        0                 1                1.0000000
+2        0             0        0                 3                0.6666667
+3        0             0        0                 2                1.0000000
+4        0             0        0                 2                0.5000000
+5        2             1        0                 8                0.3750000
+6        0             0        0                 1                1.0000000
+  main_component GOLGI_ratio CYTOSOL_ratio  ER_ratio MITOCHONDRION_ratio
+1             PM           0           0.0 0.0000000               0.000
+2             ER           0           0.0 0.6666667               0.000
+3        NUCLEUS           0           0.0 0.0000000               0.000
+4        CYTOSOL           0           0.5 0.0000000               0.000
+5             ER           0           0.0 0.3750000               0.125
+6        CYTOSOL           0           1.0 0.0000000               0.000
+  NUCLEUS_ratio PM_ratio LYSOSOME_ratio PEROXISOME_ratio CS_ratio
+1     0.0000000        1          0.000                0      0.0
+2     0.3333333        0          0.000                0      0.0
+3     1.0000000        0          0.000                0      0.0
+4     0.0000000        0          0.000                0      0.5
+5     0.0000000        0          0.125                0      0.0
+6     0.0000000        0          0.000                0      0.0
+  ENDOSOME_ratio EXTRACELLULAR_ratio RIBOSOME_ratio assigned_location
+1           0.00               0.000              0                PM
+2           0.00               0.000              0                ER
+3           0.00               0.000              0           NUCLEUS
+4           0.00               0.000              0                CS
+5           0.25               0.125              0                ER
+6           0.00               0.000              0           CYTOSOL
+  Nb_main_component Nb_assigned_location precision_assigned_location
+1                 1                    1                   1.0000000
+2                 2                    2                   0.6666667
+3                 2                    2                   1.0000000
+4                 1                    2                   1.0000000
+5                 3                    3                   0.3750000
+6                 1                    1                   1.0000000
+  updated_order
+1           189
+2           256
+3           444
+4           105
+5           253
+6            71
+\end{Soutput}
+\end{Schunk}
 \normalsize
 Here we have extracted the data accompanied only by the protein ID and
 the cluster ID together with the analysis results with respect to the
@@ -316,10 +408,11 @@ first marker set.
 As the the clusters in the \texttt{cls2\_1} \texttt{data.frame} are
 ordered by the cluster ID we can add any information to the data e.g.
 \scriptsize
-@
-<<>>=
-data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
+\end{Sinput}
+\end{Schunk}
 \normalsize
 \section{Examples}
 \label{examp_s}
@@ -333,12 +426,12 @@ path to the tab-delimited file with MSdata. As the first example we use the data
 (reference;metadata) columns.
 \subsection{Example 1}
 \label{ex1}
-
 \scriptsize
-@
-<<>>=
-file1<-system.file("extdata","Data_Fig_1a.txt",package="MetaMass")
-@
+\begin{Schunk}
+\begin{Sinput}
+> file1<-system.file("extdata","Data_Fig_1a.txt",package="MetaMass")
+\end{Sinput}
+\end{Schunk}
 \normalsize
 The function MetaMass recognizes two types of data -
 \texttt{MSfile} and \texttt{Metadata}. The \texttt{MSfile} are the
@@ -346,17 +439,18 @@ actual data to be analyzed whereas the Metadata stand for internally
 stored MSdata which can be used as reference (see
 \texttt{?Metadata}).
 \scriptsize
-@
-<<>>=
-##proteins identified by gene-name -> annotation.ID=2 (see ?AnnotationAM)
-##cluster with respect metadata only (group=0)
-res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",group=0,cluster.metadata=TRUE)
-@ %def
+\begin{Schunk}
+\begin{Sinput}
+> ##proteins identified by gene-name -> annotation.ID=2 (see ?AnnotationAM)
+> ##cluster with respect metadata only (group=0)
+> res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",group=0,cluster.metadata=TRUE)
+\end{Sinput}
+\end{Schunk}
 \normalsize
 In this case (compare the command to the \texttt{usage} section in
 \texttt{?analyze.MSfile}) we use the default annotation, as Metadata
 we use the  Christoforou, Mulvey, Breckels, et al. (2016) dataset and the
-output will be stored in files starting with the string 'res'. As a
+output will be stored in files starting with the string 'res1'. As a
 toy example (to get the similar result as in figure 1a) we want to
 cluster only the metadata and align the \texttt{MSfile} - do this we
 set \texttt{group=0} which says that none of the data in MSfile should
@@ -364,142 +458,15 @@ be clustered and we have to specify that want cluster the metadata \texttt{clust
 \\
 \subsection{Example 2}
 \label{ex2}
-As the second example let us reconstruct the figure 1b in the
+As the second example let us reconstruct the figure 2a in the
 paper. Here we want to cluster the MSfile (which is default and we
 need not specify the \texttt{group} parameter) and align the metadata
 to it.
 \scriptsize
-@
-<<>>=
-file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
-
-##cluster with respect MSfile only (cluster.metadata=FALSE by default)
-res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2")
-@ %def
-\normalsize
-The results are stored in the working directory in files starting with 'res2'.
-\subsection{Example 3}
-\label{ex3}
-See \hyperref[opt5]{Analysis option 5}
-As the third example we show how to use multiple files as input.
-\scriptsize
-@
-<<>>=
-##compare multiple files component fractionation with Metadata
-files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
-
-res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
-@ %def
-\normalsize
-See figure \ref{opt5}
-\subsection{Example 4}
-\label{ex4}
-As the last example let us show how to use multiple annotations (one can use custom annotation file if
-it corresponds the appropriate format).
-Let us use all but the 3rd annotation i.e. columns 3,4,6,7. And as another
-example of option we use $480$ cluster.
-\scriptsize
-@
-<<>>=
-res4<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2_4annot",clusters=480,markers=c(3,4,6,7))
-@ %def
-\normalsize
-User can plot the precision-recall curves directly by (figure \ref{fig2})
-\scriptsize
-@
-<<eval=false>>=
-par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
-plot.prAM(res4) #plot in  3 rows and 3 columns
-@ %def
-\normalsize
-<<produce-plot, results = hide,echo=false>>=
-pdf('roc1.pdf')
-par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
-plot.prAM(res4) #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
-dev.off()
-@
-And the heatmaps as seen in the Java TreeView application are shown in
-the figure \ref{fig1}
-\begin{figure}[h]
-\includegraphics{roc1.pdf}
-\caption{Precision-recall curves}
-\label{fig2}
-\end{figure}
-
-\begin{figure}[h]
-\includegraphics{heatmaps}
-\caption{heatmaps as seen in JavaTree view}
-\label{fig1}
-\end{figure}
-
-\subsection{Example 5}
-By default only proteins which were detected in all studies (groups)
-and Metadata are used for clustering. This could be bypassed by
-setting the parameter \texttt{overlap=$k$} - in this case missing
-values are replaced by $1$s and only the
-proteins which were detected in at least $k$ studies are used for
-clustering. The other proteins would remain in the table and heatmap
-as unassigned.
-\scriptsize
-@
-<<>>=
-files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
-res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3intersect")
-@ %def
-\normalsize
-Here only $1280$ proteins present in all studies are exported.
-\scriptsize
-@
-<<>>=
-files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
-res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_3",overlap=3)
-@ %def
-\normalsize
-Here $8548$ proteins present in at least $3$ studies are analyzed.
-\scriptsize
-@
-<<>>=
-files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
-res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=5,markers=c(3:7))
-@ %def
-\normalsize
-An finally $3315$ proteins detected in at least $5$ studies.
-In this case of course we leave large proportion of proteins
-unclassified see figure \ref{roc2}.
-<<produce-plot, results = hide,echo=false>>=
-pdf('roc2.pdf')
-par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
-plot.prAM(res3,legend.position="topleft") #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
-dev.off()
-@
-
-\begin{figure}[h]
-\includegraphics{roc2.pdf}
-\caption{Precision-recall curves}
-\label{roc2}
-\end{figure}
-\section{Number of clusters}
-It is obvious that the classification recall depends strongly on the
-number of clusters - the recall grows as the average cluster size
-decreases (with $100\%$ agreement with the annotation when each
-cluster contains just $1$ protein) however the number of unclassified
-proteins grows as well. To asses this fact we analyzed the data in
-examples 1-3 with different number of clusters (starting with average
-cluster size around $2000$ - the exact value depends on the size of
-dataset - and decreasing the size to $2$) - figure \ref{fig4}
-The solid red line (example 1) shows almost perfect reconstruction of
-classification with as much as $100$ proteins per cluster (left
-panel) and since in this example only annotated proteins were used no
-unclassified proteins. The results for the data in examples 2 and 3
-show consistently no loss of resolution for cluster size above $25$.
-
-\begin{figure}[h]
-\includegraphics{accvsclnb_all1.pdf}
-\caption{Performance against average cluster size}
-\label{fig4}
-\end{figure}
-
-
-
-
-\end{document}
+\begin{Schunk}
+\begin{Sinput}
+> file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+> MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
+> ##cluster with respect MSfile only (cluster.metadata=FALSE by default)
+> library(MetaMass)
+> analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = MyMarkers, markers =c(3,4,7), output = "Fig2a")

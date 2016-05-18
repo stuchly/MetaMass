@@ -25,8 +25,6 @@
     "opt1"
     "opt2"
     "opt3"
-    "opt4"
-    "opt5"
     "examp_s"
     "ex1"
     "ex2"

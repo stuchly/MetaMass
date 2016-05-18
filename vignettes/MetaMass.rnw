@@ -184,12 +184,14 @@ Preparation of datasets and marker set for testing of the tool.
 
 \subsection{Analysis option 1}
 \label{opt1}
-Generate the heatmap and the classification output files corresponding to Fig. 1b in the article:
+see \hyperref[ex2]{Example 2}
+Generate the heatmap and the classification output files corresponding to Fig. 2a in the article:
 (typed commands are in script font, those below can be copied and pasted into R-studio, complete commands by pressing the enter key.)
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "Data_Fig1b.txt", Metadata = "Christoforou", output = "Fig1b")
+library(MetaMass)
+analyze.MSfile(MSfile = "Data_Fig2a.txt",Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = "MyMarkers.txt", markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
 \begin{tip}
@@ -198,77 +200,96 @@ auto-complete the command.. Thus, the command above can be typed as
 follows:  ana [tab], msf [tab], “dat [tab], meta [tab],
 “Christoforou”), out [tab], “Fig1b”)
 \end{tip}
-Explanation: analyze.MSfile: name of function used to perform all the analyses.  MSfile: dataset to be analyzed, Metadata: The “Christoforou” dataset is one of several stored in MetaMass as reference data. For a complete list, call the user manual for the program by typing \texttt{?Metadata}. The meta-data is not clustered or used for the classification, but simply aligned to the processed test dataset as reference. Also note that MetaMass-R generates a dataset corresponding to the overlap of the test data and the metadata. The Excel version uses all data from the test data, and ignores missing data in the metadataset.  output: file-prefix for the output files.
-
-Result: The output files are found in the working directory. All output files have the prefix “Fig1b”. The  Fig1b.cdt file is a heatmap  file (JavaTreeView), the Fig.1b\_table.txt is the classification result table (e.g. Excel), and the Fig1b\_pr-pdf contains precision-recall curves (e.g. Acrobat Reader).
+Explanation: analyze.MSfile: name of function used to perform all the analyses.
+MSfile: dataset to be analyzed,
+Metadata (see \texttt{?Metadata}): The “Christoforou” dataset is one of several stored in MetaMass as reference data. A complete list is found in supplementary Table 1.10.  The meta-data is not clustered or used for the classification, but simply aligned to the processed test dataset as reference. Overlap=2 . The analysis is restricted to proteins that are identified both in the dataset and the metadata.
+Clusters: number of clusters to generate in K-means clustering. (an average cluster size of 5 is recommended)
+Annotation: Text file with marker lists, number corresponds to column number in the file. Markers: c(3,4,7) use marker sets in columns 3,4, and 7 in the annotation list.
+output: file-prefix for the output files.
+\\
+Result: The output files are found in the working directory. All output files have the prefix “Fig2a”.
+Fig2a.cdt file is a heatmap  file (JavaTreeView), The algoritm generates a single heatmap corresponding to the first of the marker sets, in this case marker set 3. (Uniprot/GO overlap + study 1).
+Fig.2a\_table.txt is the classification result table (open with e.g Excel). The table contains protein identifiers, annotations from HPA, Uniprot and GO, the location assigned by MetaMass and the precision. The table also contains the MS signal values.
+Fig2a\_pr-pdf contains precision-recall curves with relative numbers on the y-axis(e.g. Acrobat Reader).
+Fig2a\_pr\_abs.pdf contain precision recall curves with absolute numbers on the y-axis. These numbers correspond to the number of mapped proteins.
 
 \subsection{Analysis option 2}
 \label{opt2}
-Generate recall precision curves for multiple different marker sets (i.e similar to those in Fig. 2a in the article).
+See \hyperref[ex4]{Example 4}
+Compare results obtained when datasets 4, 9 and 10 are analyzed, and
+study 1 is used as metadata, and vice versa.  (supplementary
+Fig. 14). Analyze dataset1, use dataset 4,9 and10, as Metadata.
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "Data_Fig1b.txt", Metadata = "Christoforou", output = "Fig2acurves", markers = c(3:7))
+analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9), output = "study1_MyMark")
 @ %def
 \normalsize
-\begin{tip} This command is very similar to the one used in Example
-  1. Any command typed previously can be brought back by pressing the
-  arrow up key (and arrow down to move to the next) To modify the
-  command used in example 1, simply type the arrow up key and change the output to “Fig2acurves” and add markers = c(3:7).
-\end{tip}
-Explanation: The parameter \texttt{markers = } is used to analyze data in context of markers other than the Christoforou marker set, which is default. The marker sets have numbers from 4-7 (3= Christoforou, 4= Uniprot, 5= GO, 6= HPA supportive, 7= HPA uncertain). To use all markers in parallel: \texttt{markers= c(3:7)}. The heatmap will always correspond to the first marker in the sequence.
-\\
-Result: The Recall-Precision curves show results obtained with all the marker sets in Fig 2a.  The table contains columns for all the marker sets. The heatmap is the same as in Example 1.
+Analyze dataset 4,9 and 10, use dataset1 as Metadata
+\scriptsize
+@
+<<eval=false>>=
+analyze.MSfile(MSfile = "study4_9_10.txt",clusters = 473,Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+@ %def
+\normalsize
 
+The heatmaps are shown in supplementary Fig. 14. The pie chart in the figure shows the frequency of proteins that were mapped to the same location, different locations, not mapped, and those that were mapped using one of the datasets only. Even though studies 4 9 and 11 used low resolution methods, 80\% of proteins that were mapped to a location in both analyses are mapped to the same locations as in study 1 when the data are combined.
 \subsection{Analysis option 3}
 \label{opt3}
-Generate heatmaps to compare the mapping result obtained using different marker sets.
+See \hyperref[ex7]{Example 7}
+Compare heatmaps obtained when the data in Fig. 2a are analyzed using a wide range of marker sets from Uniprot, GO and the Human Protein Atlas  (supplementary Fig. 16)
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "Data_Fig1b.txt", Metadata = "Christoforou", output = "Fig1bUniprot", markers =4)
-@ %def
-\normalsize
-\begin{tip}
-  type arrow up to bring back the command from example 2, replace the text for output with “Fig1b\_Uniprot” and the text for markers with \texttt{markers = 4}).  Next time: \texttt{output="Fig1b\_HPAs"}, \texttt{markers =5} etc. With this approach it takes very little time to make heatmaps for all marker sets.
-\end{tip}
-Result: The heatmap generated using the Uniprot marker set is rather similar to that obtained using the Christoforou marker set (Fig1b article, example 1). With markers from the Human Protein Atlas, the area in the map assigned to the nucleus is much larger, and many of the proteins assigned to the nucleus are found in the cytoplasmic fractions. The heatmap obtained with the “uncertain” annotations from the HPA has essentially no structure. Thus, there is very little correspondence with the MS data. In the output table, the mapped locations are listed alongside annotations from Uniprot, GO, and the HPA.
-\subsection{Analysis option 4}
-\label{opt4}
-Generate recall-precision curves for single datasets (i.e. similar to Fig. 2b in article)
-\scriptsize
-@
-<<eval=false>>=
-analyze.MSfile(MSfile = "study4.txt", Metadata = "Christoforou", output = "study4")
-@ %def
-\normalsize
-Result: The recall response curves for cytosol and nucleus are similar to those for study 4 in Fig2a.
-\subsection{Analysis option 5}
-\label{opt5}
-see \hyperref[ex3]{Example 3}
-Perform a meta-analysis of datasets 4, 9 and 10.
-\scriptsize
-@
-<<eval=false>>=
-analyze.MSfile(MSfile = c("study4.txt","study9.txt", "study10.txt"), Metadata = "Christoforou", output = "study4910")
-@ %def
-\normalsize
-Explanation: c("study4.txt","study9.txt", "study10.txt") is used to merge data from multiple files into one analysis. The file contains the overlap of these three and the Christoforou dataset used as metadata.
-\\
-Result: The fractionation methods used in studies 4, 9 and 10 have
-limited resolution. However, combined they have high resolution. Thus,
-study 4 has high resolution of mitochondria, but poor separation of ER
-and nuclei. Study 9 has good separation of cytoplasmic organelles and
-nuclei, but no resolution of ER, mitochondria or cytosol. Study 9 has
-good resolution of cytosol, membranes and nuclei, but does not
-discriminate ER from mitochondria. When the datasets are combined,
-they complement each other. See figure \ref{opt5}
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=9, clusters=1400, output = "Fig2aSVM")
 
-\begin{figure}[b]
-\includegraphics{opt5.pdf}
-\caption{Heatmnap as seen in JavaTreeView}
-\label{opt5}
-\end{figure}
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=4, clusters=1400, output = "Fig2aUGOovl")
+
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=3, clusters=1400, output = "Fig2aStudy1UGOovl")
+
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=6, clusters=1400, output = "Fig2aUniGOsum")
+
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=7, clusters=1400, output = "Fig2aHPAsupportive")
+
+analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=8, clusters=1400, output = "Fig2aHPAuncertain")
+@ %def
+\normalsize
+%% \subsection{Analysis option 4}
+%% \label{opt4}
+%% Generate recall-precision curves for single datasets (i.e. similar to Fig. 2b in article)
+%% \scriptsize
+%% @
+%% <<eval=false>>=
+%% analyze.MSfile(MSfile = "study4.txt", Metadata = "Christoforou", output = "study4")
+%% @ %def
+%% \normalsize
+%% Result: The recall response curves for cytosol and nucleus are similar to those for study 4 in Fig2a.
+%% \subsection{Analysis option 5}
+%% \label{opt5}
+%% see \hyperref[ex3]{Example 3}
+%% Perform a meta-analysis of datasets 4, 9 and 10.
+%% \scriptsize
+%% @
+%% <<eval=false>>=
+%% analyze.MSfile(MSfile = c("study4.txt","study9.txt", "study10.txt"), Metadata = "Christoforou", output = "study4910")
+%% @ %def
+%% \normalsize
+%% Explanation: c("study4.txt","study9.txt", "study10.txt") is used to merge data from multiple files into one analysis. The file contains the overlap of these three and the Christoforou dataset used as metadata.
+%% \\
+%% Result: The fractionation methods used in studies 4, 9 and 10 have
+%% limited resolution. However, combined they have high resolution. Thus,
+%% study 4 has high resolution of mitochondria, but poor separation of ER
+%% and nuclei. Study 9 has good separation of cytoplasmic organelles and
+%% nuclei, but no resolution of ER, mitochondria or cytosol. Study 9 has
+%% good resolution of cytosol, membranes and nuclei, but does not
+%% discriminate ER from mitochondria. When the datasets are combined,
+%% they complement each other. See figure \ref{opt5}
+
+%% \begin{figure}[b]
+%% \includegraphics{opt5.pdf}
+%% \caption{Heatmnap as seen in JavaTreeView}
+%% \label{opt5}
+%% \end{figure}
 \subsection{Additional user-selectable variables}
 Number of groups in K-means clustering : The default option is 500 groups. The optimal number of proteins per group is 10-20. If the dataset has more than 5000 proteins or less than 3000 proteins users may specify the number of groups accordingly.  The command clusters= 250 specifies 250 clusters.
 Comparison metrics: The default option is Euclidean distance. The
@@ -311,11 +332,10 @@ reads and process your the tab-delimited text file with MS data and
 stores the results in the working directory.
 Set working directory: In R-studio go to menu: Session, select set working directory, identify the folder where your data are stored. The output files will also appear in this folder.
 After setting the working directory, it is necessary to provide the
-path to the tab-delimited file with MSdata. As the first example we use the data from figure 1 in the paper without the first
+path to the tab-delimited file with MSdata. As the first example we use the data from figure 2a in the paper without the first
 (reference;metadata) columns.
 \subsection{Example 1}
 \label{ex1}
-
 \scriptsize
 @
 <<>>=
@@ -338,7 +358,7 @@ res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",group
 In this case (compare the command to the \texttt{usage} section in
 \texttt{?analyze.MSfile}) we use the default annotation, as Metadata
 we use the  Christoforou, Mulvey, Breckels, et al. (2016) dataset and the
-output will be stored in files starting with the string 'res'. As a
+output will be stored in files starting with the string 'res1'. As a
 toy example (to get the similar result as in figure 1a) we want to
 cluster only the metadata and align the \texttt{MSfile} - do this we
 set \texttt{group=0} which says that none of the data in MSfile should
@@ -346,23 +366,24 @@ be clustered and we have to specify that want cluster the metadata \texttt{clust
 \\
 \subsection{Example 2}
 \label{ex2}
-As the second example let us reconstruct the figure 1b in the
+As the second example let us reconstruct the figure 2a in the
 paper. Here we want to cluster the MSfile (which is default and we
 need not specify the \texttt{group} parameter) and align the metadata
 to it.
 \scriptsize
 @
 <<>>=
-file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 
 ##cluster with respect MSfile only (cluster.metadata=FALSE by default)
-res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2")
+library(MetaMass)
+analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = MyMarkers, markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
 The results are stored in the working directory in files starting with 'res2'.
 \subsection{Example 3}
 \label{ex3}
-See \hyperref[opt5]{Analysis option 5}
 As the third example we show how to use multiple files as input.
 \scriptsize
 @
@@ -376,7 +397,27 @@ res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
 See figure \ref{opt5}
 \subsection{Example 4}
 \label{ex4}
-As the last example let us show how to use multiple annotations (one can use custom annotation file if
+
+Analyze dataset1, use dataset 4,9 and 10, as Metadata.
+\scriptsize
+@
+<<>>=
+file1<-system.file("extdata","Christoforou.txt",package="MetaMass")
+MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
+analyze.MSfile(MSfile = file1, clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = MyMarkers, markers=c(3,4,6,7,9), output = "study1_MyMark")
+@ %def
+\normalsize
+Analyze dataset 4,9 and 10, use dataset1 as Metadata
+\scriptsize
+@
+<<>>=
+files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
+analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers.txt, markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+@ %def
+\normalsize
+\subsection{Example 5}
+\label{ex5}
+As another example let us show how to use multiple annotations (one can use custom annotation file if
 it corresponds the appropriate format).
 Let us use all but the 3rd annotation i.e. columns 3,4,6,7. And as another
 example of option we use $480$ cluster.
@@ -414,7 +455,7 @@ the figure \ref{fig1}
 \label{fig1}
 \end{figure}
 
-\subsection{Example 5}
+\subsection{Example 6}
 By default only proteins which were detected in all studies (groups)
 and Metadata are used for clustering. This could be bypassed by
 setting the parameter \texttt{overlap=$k$} - in this case missing
@@ -460,6 +501,27 @@ dev.off()
 \caption{Precision-recall curves}
 \label{roc2}
 \end{figure}
+\subsection{Example 7}
+\label{ex7}
+\scriptsize
+@
+<<eval=false>>=
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
+
+analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=9, clusters=1400, output = "Fig2aSVM")
+
+analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=4, clusters=1400, output = "Fig2aUGOovl")
+
+analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=3, clusters=1400, output = "Fig2aStudy1UGOovl")
+
+analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=6, clusters=1400, output = "Fig2aUniGOsum")
+
+analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=7, clusters=1400, output = "Fig2aHPAsupportive")
+
+analyze.MSfile(MSfile =file2, Annotation = MyMarkers, markers=8, clusters=1400, output = "Fig2aHPAuncertain")
+@ %def
+\normalsize
 \section{Number of clusters}
 It is obvious that the classification recall depends strongly on the
 number of clusters - the recall grows as the average cluster size
