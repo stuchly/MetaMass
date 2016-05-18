@@ -121,10 +121,10 @@ the following conventions
 \begin{itemize}
   \item the file is tab-delimited (by default)
   \item the first column contains the Uniprot IDs
-    \item the localisations identifiers must be empty string or syntactically valid
+    \item the localizations identifiers must be empty string or syntactically valid
       names (i.e. a string which consists of letters, numbers, and the dot and (for versions of R at least 1.9.0) underscore characters, and starts with either a letter or a dot not followed by a number. Reserved words are not syntactic names)
   \end{itemize}
-  The localisations will be sorted in the following order
+  The localizations will be sorted in the following order
   \scriptsize
 @
 <<>>=
@@ -132,7 +132,7 @@ data(levelsC)
 levelsC
 @ %def
 \normalsize
-and the localisations not present in \texttt{levelsC} will be sorted
+and the localizations not present in \texttt{levelsC} will be sorted
   in lexicographical order after those present in \texttt{levelsC}.
 \section{Output}
 By default (with parameter \texttt{output=NULL}) the user level function
@@ -180,7 +180,7 @@ Preparation of datasets and marker set for testing of the tool.
 
 1. Copy contents of supplementary table 1.13 (Data Fig2a)  into new spreadsheet. Delete columns B:L (Christoforou data) . Save as tab-delimited text in folder named e.g. Test, name the file Data\_Fig.2a
 2. Copy contents of supplementary table 1.14 (study4\_9\_10)  into new spreadsheet. Save as tab-delimited text in folder named e.g. Test, name the file study4\_9\_10.txt
-3. Copy contents in supplementary Table 1.11, (Annotation Table R-version) . Copy data into new spreadsheet.  Save as tab-delimited text in folder named e.g. Test, name the file MyMarkers
+3. Copy contents in supplementary Table 1.11, (Annotation Table R-version) . Copy data into new spreadsheet.  Save as tab-delimited text in folder named e.g. Test, name the file MyMarkers.txt
 
 \subsection{Analysis option 1}
 \label{opt1}
@@ -191,24 +191,35 @@ Generate the heatmap and the classification output files corresponding to Fig. 2
 @
 <<eval=false>>=
 library(MetaMass)
-analyze.MSfile(MSfile = "Data_Fig2a.txt",Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = "MyMarkers.txt", markers =c(3,4,7), output = "Fig2a")
+analyze.MSfile(MSfile = "Data_Fig2a.txt",Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = "MyMarkers.txt",
+markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
 \begin{tip}
 Typing in R-Studio is greatly simplified using the tab key to
 auto-complete the command.. Thus, the command above can be typed as
 follows:  ana [tab], msf [tab], “dat [tab], meta [tab],
-“Christoforou”), out [tab], “Fig1b”)
+“Christoforou”), out [tab], “Fig2a”)
 \end{tip}
 Explanation: analyze.MSfile: name of function used to perform all the analyses.
 MSfile: dataset to be analyzed,
-Metadata (see \texttt{?Metadata}): The “Christoforou” dataset is one of several stored in MetaMass as reference data. A complete list is found in supplementary Table 1.10.  The meta-data is not clustered or used for the classification, but simply aligned to the processed test dataset as reference. Overlap=2 . The analysis is restricted to proteins that are identified both in the dataset and the metadata.
+Metadata (see \texttt{?Metadata}): The “Christoforou” dataset is one
+of several stored in MetaMass as reference data. A complete list is
+found in supplementary Table 1.10.  The meta-data is not clustered or
+used for the classification, but simply aligned to the processed test
+dataset as reference.
+Overlap=2 . The analysis is restricted to
+proteins that are identified both in the dataset and the metadata
+(\textcolor{red}{Edit: the behavior has changed in current
+  version. The \texttt{overlap} parameter affects now only data used
+  for clustering i.e. the presence of protein in Metadata is not
+  checked unless \texttt{cluster.metdata=TRUE}}
 Clusters: number of clusters to generate in K-means clustering. (an average cluster size of 5 is recommended)
 Annotation: Text file with marker lists, number corresponds to column number in the file. Markers: c(3,4,7) use marker sets in columns 3,4, and 7 in the annotation list.
 output: file-prefix for the output files.
 \\
 Result: The output files are found in the working directory. All output files have the prefix “Fig2a”.
-Fig2a.cdt file is a heatmap  file (JavaTreeView), The algoritm generates a single heatmap corresponding to the first of the marker sets, in this case marker set 3. (Uniprot/GO overlap + study 1).
+Fig2a.cdt file is a heatmap  file (JavaTreeView), The algorithm generates a single heatmap corresponding to the first of the marker sets, in this case marker set 3. (Uniprot/GO overlap + study 1).
 Fig.2a\_table.txt is the classification result table (open with e.g Excel). The table contains protein identifiers, annotations from HPA, Uniprot and GO, the location assigned by MetaMass and the precision. The table also contains the MS signal values.
 Fig2a\_pr-pdf contains precision-recall curves with relative numbers on the y-axis(e.g. Acrobat Reader).
 Fig2a\_pr\_abs.pdf contain precision recall curves with absolute numbers on the y-axis. These numbers correspond to the number of mapped proteins.
@@ -383,7 +394,7 @@ analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 
 markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
-The results are stored in the working directory in files starting with 'res2'.
+The results are stored in the working directory in files starting with 'Fig2a'.
 \subsection{Example 3}
 \label{ex3}
 As the third example we show how to use multiple files as input.
