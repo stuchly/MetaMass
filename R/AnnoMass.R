@@ -1,6 +1,5 @@
 .onLoad<-function(...){
-    packageStartupMessage("message from .onAttach via
-packageStartupMessage\n")
+    packageStartupMessage("This package contains detailed walkthrough for the current vesion.\n Use the command\n vignette(\"MetaMass\")")
 }
 trim.trailing.spaces<-function(x){
     .trim<-function(xx){
