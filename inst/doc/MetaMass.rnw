@@ -176,7 +176,11 @@ experience with R. If the reader wants to avoid downloading a creating
 this files he can find the same examples in the section \hyperref[examp_s]{Examples} where the same internally stored datasets are used.
 See \texttt{?analyze.MSfile} for detailed information.
 \\
-Users should first retrieve supplementary table 1 from Lund-Johansen et al. ref. and follow instructions in the table to retrieve the following datasets: Fig. 1b (Table 1.5), Datasets 4, 9 and 10 (Table 1.7, use the filtering option explained in the text box in columns in columns DP:EC). The files should be saved in a new folder as tab-delimited text and named “Data\_Fig1b.txt”  “study4.txt”, “study9.txt” and “study10.txt”,  respectively. Set this folder as the working directory in R-studio. (type ctrl\_shift\_H and navigate to the folder).
+Preparation of datasets and marker set for testing of the tool.
+
+1. Copy contents of supplementary table 1.13 (Data Fig2a)  into new spreadsheet. Delete columns B:L (Christoforou data) . Save as tab-delimited text in folder named e.g. Test, name the file Data\_Fig.2a
+2. Copy contents of supplementary table 1.14 (study4\_9\_10)  into new spreadsheet. Save as tab-delimited text in folder named e.g. Test, name the file study4\_9\_10.txt
+3. Copy contents in supplementary Table 1.11, (Annotation Table R-version) . Copy data into new spreadsheet.  Save as tab-delimited text in folder named e.g. Test, name the file MyMarkers
 
 \subsection{Analysis option 1}
 \label{opt1}
