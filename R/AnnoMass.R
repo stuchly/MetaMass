@@ -546,14 +546,14 @@ plot.prAM<-function(rocAM,abs=FALSE,legend.position="bottomleft"){  ##,mfrow=c(1
         for (jj in 1:(length(rocAM[[i]]))) if (!is.null(rocAM[[i]][[jj]])) break
         if (is.null(rocAM[[i]][[jj]])) next
         xlm1<-max(as.numeric(unlist(rocAM[[i]])),na.rm=TRUE)
-        plot(rocAM[[i]][[jj]],type="l",col=jj,lty=jj,ylim=c(0,xlm1),xlim=c(0,1),main=names(rocAM)[i],ylab=Recall,xlab="Precision",lwd=1.5)
+        plot(rocAM[[i]][[jj]],type="l",col=jj,lty=jj,ylim=c(0,xlm1),xlim=c(0,1),main=names(rocAM)[i],ylab=Recall,xlab="Precision",lwd=1.8)
         K<-length(rocAM[[i]])
         legend(legend.position,legend=paste(annotation),lty=1:K,col=1:K,cex=1)
         if (length(rocAM[[i]])<=jj) next
 
         for (j in (jj+1):length(rocAM[[i]])){
 
-            lines(rocAM[[i]][[j]],col=j,lty=j,lwd=1.5)
+            lines(rocAM[[i]][[j]],col=j,lty=j,lwd=1.8)
 
         }
     }
