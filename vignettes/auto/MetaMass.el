@@ -30,8 +30,9 @@
     "ex2"
     "ex3"
     "ex4"
+    "ex5"
     "fig2"
-    "fig1"
     "roc2"
+    "ex7"
     "fig4")))
 

@@ -222,7 +222,8 @@ Fig. 14). Analyze dataset1, use dataset 4,9 and10, as Metadata.
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9), output = "study1_MyMark")
+analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt",
+markers=c(3,4,6,7,9), output = "study1_MyMark")
 @ %def
 \normalsize
 Analyze dataset 4,9 and 10, use dataset1 as Metadata
@@ -378,7 +379,8 @@ MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 
 ##cluster with respect MSfile only (cluster.metadata=FALSE by default)
 library(MetaMass)
-analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = MyMarkers, markers =c(3,4,7), output = "Fig2a")
+analyze.MSfile(MSfile = file2,Metadata = "Christoforou",overlap = 2, clusters = 1400, Annotation = MyMarkers,
+markers =c(3,4,7), output = "Fig2a")
 @ %def
 \normalsize
 The results are stored in the working directory in files starting with 'res2'.
@@ -404,7 +406,8 @@ Analyze dataset1, use dataset 4,9 and 10, as Metadata.
 <<>>=
 file1<-system.file("extdata","Christoforou.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
-analyze.MSfile(MSfile = file1, clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = MyMarkers, markers=c(3,4,6,7,9), output = "study1_MyMark")
+analyze.MSfile(MSfile = file1, clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = MyMarkers,
+markers=c(3,4,6,7,9), output = "study1_MyMark")
 @ %def
 \normalsize
 Analyze dataset 4,9 and 10, use dataset1 as Metadata
@@ -412,7 +415,7 @@ Analyze dataset 4,9 and 10, use dataset1 as Metadata
 @
 <<>>=
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
-analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers.txt, markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers, markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
 @ %def
 \normalsize
 \subsection{Example 5}
@@ -441,19 +444,19 @@ par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
 plot.prAM(res4) #plot in 3 rows and 3 columns    # Produces Figure \ref{fig1}
 dev.off()
 @
-And the heatmaps as seen in the Java TreeView application are shown in
-the figure \ref{fig1}
+%% And the heatmaps as seen in the Java TreeView application are shown in
+%% the figure \ref{fig1}
 \begin{figure}[h]
 \includegraphics{roc1.pdf}
 \caption{Precision-recall curves}
 \label{fig2}
 \end{figure}
 
-\begin{figure}[h]
-\includegraphics{heatmaps}
-\caption{heatmaps as seen in JavaTree view}
-\label{fig1}
-\end{figure}
+%% \begin{figure}[h]
+%% \includegraphics{heatmaps}
+%% \caption{heatmaps as seen in JavaTree view}
+%% \label{fig1}
+%% \end{figure}
 
 \subsection{Example 6}
 By default only proteins which were detected in all studies (groups)
@@ -505,7 +508,7 @@ dev.off()
 \label{ex7}
 \scriptsize
 @
-<<eval=false>>=
+<<>>=
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 

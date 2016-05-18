@@ -557,7 +557,7 @@ plot.prAM<-function(rocAM,abs=FALSE,legend.position="bottomleft"){  ##,mfrow=c(1
 
 }
 
-analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=NULL,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=2){
+analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=2,data.ID=1,markers=3,group_names=NULL,clusters=NULL,output="results",sep="\t",method="kmeans",metric="euclidean",iter.max=100,nstart=1,group=NULL,subset=NULL,sort.by=1,cluster.metadata=FALSE,overlap=NULL){
     annotation.component<-markers
     all_ov<-ifelse(is.null(overlap),FALSE,TRUE)
     if (!is.null(output)){
