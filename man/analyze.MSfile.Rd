@@ -79,7 +79,10 @@ analyze.MSfile(MSfile,Annotation=NULL,Metadata="Christoforou",annotation.ID=1,da
 
   \item{cluster.metada}{logical. Should we cluster the Metadata?}
 
-  \item{overlap}{if null only proteins detected in all studies and Metadata will be used for clustering. If integer (k) only proteins detected at least k studies will be used for clustering}
+  \item{overlap}{if null only proteins detected in all studies and
+  Metadata will be used for clustering. If integer (k) only proteins
+  detected at least k studies (which are used for clustering - see
+  parameters cluster.metadata and group) will be used for clustering}
 
 }
 \value{Object of class AnnoMass}
