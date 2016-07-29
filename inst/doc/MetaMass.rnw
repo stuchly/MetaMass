@@ -304,7 +304,8 @@ analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=
 %% \label{opt5}
 %% \end{figure}
 \subsection{Additional user-selectable variables}
-Number of groups in K-means clustering : The default option is 500 groups. The optimal number of proteins per group is 10-20. If the dataset has more than 5000 proteins or less than 3000 proteins users may specify the number of groups accordingly.  The command clusters= 250 specifies 250 clusters.
+Number of groups in K-means clustering : The default option is 5
+proteins per cluster. The command clusters= 250 specifies 250 clusters.
 Comparison metrics: The default option is Euclidean distance. The
 command… metric =”correlation” specifies Pearson correlation (see \texttt{?analyze.MSfile}).
 \section{Analysis within R}

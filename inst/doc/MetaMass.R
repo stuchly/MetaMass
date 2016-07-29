@@ -82,7 +82,7 @@ filename
 
 
 ###################################################
-### code chunk number 11: MetaMass.rnw:319-326
+### code chunk number 11: MetaMass.rnw:320-327
 ###################################################
 file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
 
@@ -94,19 +94,19 @@ head(cls2_1)
 
 
 ###################################################
-### code chunk number 12: MetaMass.rnw:336-337
+### code chunk number 12: MetaMass.rnw:337-338
 ###################################################
 data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
 
 
 ###################################################
-### code chunk number 13: MetaMass.rnw:354-355
+### code chunk number 13: MetaMass.rnw:355-356
 ###################################################
 file1<-system.file("extdata","Data_Fig_1a.txt",package="MetaMass")
 
 
 ###################################################
-### code chunk number 14: MetaMass.rnw:365-368
+### code chunk number 14: MetaMass.rnw:366-369
 ###################################################
 ##proteins identified by gene-name -> annotation.ID=2 (see ?AnnotationAM)
 ##cluster with respect metadata only (group=0)
@@ -114,7 +114,7 @@ res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",group
 
 
 ###################################################
-### code chunk number 15: MetaMass.rnw:388-395
+### code chunk number 15: MetaMass.rnw:389-396
 ###################################################
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
@@ -126,7 +126,7 @@ markers =c(3,4,7), output = "Fig2a")
 
 
 ###################################################
-### code chunk number 16: MetaMass.rnw:404-408
+### code chunk number 16: MetaMass.rnw:405-409
 ###################################################
 ##compare multiple files component fractionation with Metadata
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
@@ -135,7 +135,7 @@ res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
 
 
 ###################################################
-### code chunk number 17: MetaMass.rnw:418-422
+### code chunk number 17: MetaMass.rnw:419-423
 ###################################################
 file1<-system.file("extdata","Christoforou.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
@@ -144,20 +144,20 @@ markers=c(3,4,6,7), output = "study1_MyMark")
 
 
 ###################################################
-### code chunk number 18: MetaMass.rnw:428-430
+### code chunk number 18: MetaMass.rnw:429-431
 ###################################################
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
 analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers, markers=c(3,4,6,7),output = "study4_9_10_MyMark")
 
 
 ###################################################
-### code chunk number 19: MetaMass.rnw:441-442
+### code chunk number 19: MetaMass.rnw:442-443
 ###################################################
 res4<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2_4annot",clusters=480,markers=c(3,4,6,7))
 
 
 ###################################################
-### code chunk number 20: MetaMass.rnw:448-450 (eval = FALSE)
+### code chunk number 20: MetaMass.rnw:449-451 (eval = FALSE)
 ###################################################
 ## par(mfrow=c(3,3),mar=c(1, 4, 2.2, 1) + 0.1,cex=0.45)
 ## plot.prAM(res4) #plot in  3 rows and 3 columns
@@ -173,21 +173,21 @@ dev.off()
 
 
 ###################################################
-### code chunk number 22: MetaMass.rnw:483-485
+### code chunk number 22: MetaMass.rnw:484-486
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3intersect")
 
 
 ###################################################
-### code chunk number 23: MetaMass.rnw:491-493
+### code chunk number 23: MetaMass.rnw:492-494
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_3",overlap=3)
 
 
 ###################################################
-### code chunk number 24: MetaMass.rnw:499-501
+### code chunk number 24: MetaMass.rnw:500-502
 ###################################################
 files2<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt","Andreyev.txt","Rodriguez.txt"),package="MetaMass")
 res3<-analyze.MSfile(MSfile=files2,Metadata=c("Christoforou"),output="res3_5",overlap=5,markers=c(3:7))
@@ -203,7 +203,7 @@ dev.off()
 
 
 ###################################################
-### code chunk number 26: MetaMass.rnw:523-536
+### code chunk number 26: MetaMass.rnw:524-537
 ###################################################
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
