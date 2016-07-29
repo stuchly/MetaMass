@@ -575,7 +575,7 @@ analyze.MSfile<-function(MSfile,Annotation=NULL,Metadata="Christoforou",annotati
     } else {
         if (!is.data.frame(Annotation)) Annotation<-read.table(Annotation,header=TRUE,stringsAsFactors=FALSE,sep=sep,comment.char="")
     }
-
+    print("hu")
     if (!is.null(Metadata)){
         metaD<-list()[1:length(Metadata)]
         names(metaD)<-Metadata

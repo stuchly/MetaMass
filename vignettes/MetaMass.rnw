@@ -236,14 +236,14 @@ Fig. 14). Analyze dataset1, use dataset 4,9 and10, as Metadata.
 @
 <<eval=false>>=
 analyze.MSfile(MSfile = "study1.txt", clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = "MyMarkers.txt",
-markers=c(3,4,6,7,9), output = "study1_MyMark")
+markers=c(3,4,6,7), output = "study1_MyMark")
 @ %def
 \normalsize
 Analyze dataset 4,9 and 10, use dataset1 as Metadata
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "study4_9_10.txt",clusters = 473,Annotation = "MyMarkers.txt", markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+analyze.MSfile(MSfile = "study4_9_10.txt",clusters = 473,Annotation = "MyMarkers.txt", markers=c(3,4,6,7),output = "study4_9_10_MyMark")
 @ %def
 \normalsize
 
@@ -255,7 +255,6 @@ Compare heatmaps obtained when the data in Fig. 2a are analyzed using a wide ran
 \scriptsize
 @
 <<eval=false>>=
-analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=9, clusters=1400, output = "Fig2aSVM")
 
 analyze.MSfile(MSfile = "Data_Fig2a.txt", Annotation = "MyMarkers.txt", markers=4, clusters=1400, output = "Fig2aUGOovl")
 
@@ -420,7 +419,7 @@ Analyze dataset1, use dataset 4,9 and 10, as Metadata.
 file1<-system.file("extdata","Christoforou.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 analyze.MSfile(MSfile = file1, clusters=432, Metadata = c("Carvalho", "Bileck", "Thakar"), Annotation = MyMarkers,
-markers=c(3,4,6,7,9), output = "study1_MyMark")
+markers=c(3,4,6,7), output = "study1_MyMark")
 @ %def
 \normalsize
 Analyze dataset 4,9 and 10, use dataset1 as Metadata
@@ -428,7 +427,7 @@ Analyze dataset 4,9 and 10, use dataset1 as Metadata
 @
 <<>>=
 files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
-analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers, markers=c(3,4,6,7,9),output = "study4_9_10_MyMark")
+analyze.MSfile(MSfile = files1,clusters = 473,Annotation = MyMarkers, markers=c(3,4,6,7),output = "study4_9_10_MyMark")
 @ %def
 \normalsize
 \subsection{Example 5}
@@ -525,7 +524,6 @@ dev.off()
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 MyMarkers<-system.file("extdata","MyMarkers.txt",package="MetaMass")
 
-analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=9, clusters=1400, output = "Fig2aSVM")
 
 analyze.MSfile(MSfile = file2, Annotation = MyMarkers, markers=4, clusters=1400, output = "Fig2aUGOovl")
 
