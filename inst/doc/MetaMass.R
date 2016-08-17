@@ -54,8 +54,6 @@ filename
 library(MetaMass)
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2a")
-##cluster with respect MSfile only (cluster.metadata=FALSE by default)
-
 
 
 ###################################################
@@ -91,26 +89,26 @@ analyze.MSfile(MSfile = study4_9_10,  overlap=2, output = "study4910")
 
 
 ###################################################
-### code chunk number 13: MetaMass.rnw:274-275 (eval = FALSE)
+### code chunk number 13: MetaMass.rnw:273-274 (eval = FALSE)
 ###################################################
 ## data_table<-read.table(filename,header=TRUE,sep="\t")
 
 
 ###################################################
-### code chunk number 14: MetaMass.rnw:287-288 (eval = FALSE)
+### code chunk number 14: MetaMass.rnw:286-287 (eval = FALSE)
 ###################################################
 ## colnames(data_table)[sapply(data.table,is.numeric)]
 
 
 ###################################################
-### code chunk number 15: MetaMass.rnw:306-308
+### code chunk number 15: MetaMass.rnw:305-307
 ###################################################
 data(levelsC)
 levelsC
 
 
 ###################################################
-### code chunk number 16: MetaMass.rnw:328-335
+### code chunk number 16: MetaMass.rnw:327-334
 ###################################################
 file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
 
@@ -122,7 +120,7 @@ head(cls2_1)
 
 
 ###################################################
-### code chunk number 17: MetaMass.rnw:345-346
+### code chunk number 17: MetaMass.rnw:344-345
 ###################################################
 data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
 

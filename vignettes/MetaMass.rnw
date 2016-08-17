@@ -213,8 +213,6 @@ The \hyperref[opt1]{Analysis option 1} using internally stored data.
 library(MetaMass)
 file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
 analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2a")
-##cluster with respect MSfile only (cluster.metadata=FALSE by default)
-
 @ %def
 \normalsize
 
@@ -258,6 +256,7 @@ analyze.MSfile(MSfile = study4, overlap=1, output = "study4", markers = 8)
 \label{ex5}
 The \hyperref[opt5]{Analysis option 5} using internally stored data.
 see \texttt{?Metadata}
+\scriptsize
 @
 <<example 5>>=
 library(MetaMass)
