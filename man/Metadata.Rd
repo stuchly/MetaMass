@@ -17,13 +17,13 @@ Carvalho
 
 or as extdata
 
-filename<-system.file("extdata","Christoforou.txt",package="MetaMS")
-filename<-system.file("extdata","Bileck.txt",package="MetaMS")
-filename<-system.file("extdata","Rodriguez.txt",package="MetaMS")
-filename<-system.file("extdata","Andreyev.txt",package="MetaMS")
-filename<-system.file("extdata","Thakar.txt",package="MetaMS")
-filename<-system.file("extdata","Larance.txt",package="MetaMS")
-filename<-system.file("extdata","Carvalho.txt",package="MetaMS")
+filename<-system.file("extdata","Christoforou.txt",package="MetaMass")
+filename<-system.file("extdata","Bileck.txt",package="MetaMass")
+filename<-system.file("extdata","Rodriguez.txt",package="MetaMass")
+filename<-system.file("extdata","Andreyev.txt",package="MetaMass")
+filename<-system.file("extdata","Thakar.txt",package="MetaMass")
+filename<-system.file("extdata","Larance.txt",package="MetaMass")
+filename<-system.file("extdata","Carvalho.txt",package="MetaMass")
 
 }
 \format{

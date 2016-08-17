@@ -99,11 +99,29 @@ filename
 @ %def
 \normalsize
 \section{Walk-through}
-In this section we provide a detailed description how to analyze MS data files. Users should first retrieve supplementary table 1 from Lund-Johansen et al. Nature Methods 2016 and follow instructions in the table to retrieve the following datasets as described in text box within the tables: Data\_Fig2a (Table 1.13), Datasets 4, 9 and 10 (Table 1.3, use the filtering option explained in the text box in columns in columns BO:BY). The files should be saved in a new folder (e.g. named “Test”) as separate tab-delimited text files and named “Data\_Fig2a.txt” “study4.txt”, “study9.txt” and “study10.txt”, respectively. Set the folder “Test” as the working directory in R-studio. (type ctrl shift H and navigate to the folder).
+In this section we provide a detailed description how to analyze MS
+data files. Users should first retrieve supplementary table 1 from
+Lund-Johansen et al. Nature Methods 2016 and follow instructions in
+the table to retrieve the following datasets as described in text box
+within the tables: Data\_Fig2a (Table 1.13), Datasets 4, 9 and 10
+(Table 1.3, use the filtering option explained in the text box in
+columns in columns BO:BY). The files should be saved in a new folder
+(e.g. named “Test”) as separate tab-delimited text files and named
+“Data\_Fig2a.txt” “study4.txt”, “study9.txt” and “study10.txt”,
+respectively. Set the folder “Test” as the working directory in
+R-studio. (type ctrl shift H and navigate to the folder). The data
+analyzed in this section are included in the package for convenience
+of the user (no need to download any files unless the user wants to
+learn how to prepare the input from the scratch) - see the references to the \hyperref[Examps]{Examples section}.
 
 \subsection{Analysis option 1}
 \label{opt1}
-Most users are likely to prefer to use the default option, since the command is very simple.  The command below will generate a heatmap similar to that in Fig.2a in the article, a data table similar to that in supplementary Table 1.15 and a precision recall curves for the fit between the default marker set and the data. Users only need to modify the names for the input and output files to work with other datasets.
+Most users are likely to prefer to use the default option, since the
+command is very simple.  The command below will generate a heatmap
+similar to that in Fig.2a in the article, a data table similar to that
+in supplementary Table 1.15 and a precision recall curves for the fit
+between the default marker set and the data. Users only need to modify
+the names for the input and output files to work with other datasets - see \hyperref[ex1]{Example 1}
 \scriptsize
 @
 <<eval=false>>=
@@ -123,7 +141,10 @@ analyze.MSfile(MSfile = "Data_Fig2a.txt", overlap=2, output = "Fig2a")
 The output files are found in the working directory. All output files have the prefix “Fig2a”. The Fig2a.cdt file is a heatmap file (JavaTreeView), the Fig2a\_table.txt is the classification result table (e.g. Excel), and the Fig2a\_pr.pdf and Fig2a\_pr\_abs.pdf contain precision-recall curves (e.g. Acrobat Reader).
 
 \subsection{Analysis option 2}
-Generate recall precision curves for multiple different marker sets (i.e similar to those in Fig. 2b in the article, but with traces for all available marker sets).
+\label{opt2}
+Generate recall precision curves for multiple different marker sets
+(i.e similar to those in Fig. 2b in the article, but with traces for
+all available marker sets) - see \hyperref[ex2]{Example 2}
 \scriptsize
 @
 <<eval=false>>=
@@ -138,7 +159,9 @@ The command \textit{markers = c(3:8)} specifies use of all marker sets that are 
 
 
 \subsection{Analysis option 3}
-Generate heatmaps to compare the mapping result obtained using different marker sets.
+\label{opt3}
+Generate heatmaps to compare the mapping result obtained using
+different marker sets - see \hyperref[ex3]{Example 3}
 \scriptsize
 @
 <<eval=false>>=
@@ -152,7 +175,9 @@ Type arrow-up to bring back the command from example  \hyperref[opt1]{5.2}, and 
 \noindent Result:\\
 The heatmap generated using the Uniprot/GO overlap set marker set is rather similar to that obtained using the Study 1 + Uniprot/GO marker set (Fig2a article, example \hyperref[opt1]{5.1}). With markers from the Human Protein Atlas, the area in the map assigned to the nucleus is much larger, and many of the proteins assigned to the nucleus are found in the cytoplasmic fractions. The heatmap obtained with the “uncertain” annotations from the HPA has very little structure. Thus, there is very little correspondence with the MS data. In the output table, the mapped locations are listed alongside annotations from Uniprot, GO, and the HPA.
 \subsection{Analysis option 4}
-Generate recall-precision curves for single datasets (i.e. similar to Fig. 2c in article)
+\label{opt4}
+Generate recall-precision curves for single datasets (i.e. similar to
+Fig. 2c in article) - see \hyperref[ex4]{Example 4}
 \scriptsize
 @
 <<eval=false>>=
@@ -162,8 +187,8 @@ analyze.MSfile(MSfile = "study4.txt", overlap=1, output = "study4", markers = 8)
 \noindent Result: The recall response curves for cytosol and nucleus are similar to those for study 4 in Fig2a.
 
 \subsection{Analysis option 5}
-
-Perform a meta-analysis of datasets 4, 9 and 10.
+\label{opt5}
+Perform a meta-analysis of datasets 4, 9 and 10 - see \hyperref[ex5]{Example 5}
 \scriptsize
 @
 <<eval=false>>=
@@ -177,7 +202,70 @@ c(”study4.txt”,”study9.txt”, ”study10.txt”) is used to merge data fr
 \noindent Result:\\
 The fractionation methods used in studies 4, 9 and 10 have limited resolution. However, combined they have high resolution. Thus, study 4 has high resolution of mitochondria, but poor separation of ER and nuclei. Study 9 has good separation of cytoplasmic organelles and nuclei, but no resolution of ER, mitochondria or cytosol. Study 9 has good resolution of cytosol, membranes and nuclei, but does not discriminate ER from mitochondria. When the datasets are combined, they complement each other.
 
-\subsection{Troubleshooting}
+\section{Examples}
+\label{Examps}
+\subsection{Example 1}
+\label{ex1}
+The \hyperref[opt1]{Analysis option 1} using internally stored data.
+\scriptsize
+@
+<<example 1>>=
+library(MetaMass)
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2a")
+##cluster with respect MSfile only (cluster.metadata=FALSE by default)
+
+@ %def
+\normalsize
+
+\subsection{Example 2}
+\label{ex2}
+The \hyperref[opt2]{Analysis option 2} using internally stored data.
+\scriptsize
+@
+<<example 2>>=
+library(MetaMass)
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2acurves", markers = c(3:8))
+@ %def
+\normalsize
+
+\subsection{Example 3}
+\label{ex3}
+The \hyperref[opt3]{Analysis option 3} using internally stored data.
+
+\scriptsize
+@
+<<example 3>>=
+library(MetaMass)
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2aUniGOoverlap", markers = 4)
+@ %def
+\normalsize
+\subsection{Example 4}
+\label{ex4}
+The \hyperref[opt4]{Analysis option 4} using internally stored data.
+
+\scriptsize
+@
+<<example 4>>=
+library(MetaMass)
+study4<-system.file("extdata","Carvalho.txt",package="MetaMass")
+analyze.MSfile(MSfile = study4, overlap=1, output = "study4", markers = 8)
+@ %def
+\normalsize
+\subsection{Example 5}
+\label{ex5}
+The \hyperref[opt5]{Analysis option 5} using internally stored data.
+see \texttt{?Metadata}
+@
+<<example 5>>=
+library(MetaMass)
+study4_9_10<-system.file("extdata",c("Carvalho.txt","Bileck.txt","Thakar.txt"),package="MetaMass")
+analyze.MSfile(MSfile = study4_9_10,  overlap=2, output = "study4910")
+@ %def
+\normalsize
+\section{Troubleshooting}
 The common challenge for new users of R is data import. The function
 \texttt{analyze.MSfile} expects tab-delimited file which could be
 read via function \texttt{read.table()}

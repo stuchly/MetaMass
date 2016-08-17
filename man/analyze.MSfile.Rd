@@ -96,24 +96,42 @@ data in outupfiles (_table and _treeview) are sorted first with respect
   clusters and then with respect to precision_assigned_location score. The
   values of markers[sort.by] annotation are used.}
 \examples{
+##See the vignette and corresponding Analysis option for each example for explanation
 
-##Example 1
-file1<-system.file("extdata","Data_Fig_1a.txt",package="MetaMass")
-file1
+###################################################
+### example 1
+###################################################
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2a")
+##cluster with respect MSfile only (cluster.metadata=FALSE by default)
 
-##proteins identified by genename -> annotation.ID=2 (see ?AnnotationAM)
-##cluster with respect metadata only (group=0)
-res1<-analyze.MSfile(MSfile=file1,Metadata=c("Christoforou"),output="res1",group=0,cluster.metadata=TRUE)
 
-##Example 2
-file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
-file2
-##cluster with respect MSfile only (cluster.metadata=FALSE)
-res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2")
 
-##Example 3
-##compare multiple files component fractionation with Metadata
-files1<-system.file("extdata",c("Bileck.txt","Thakar.txt","Carvalho.txt"),package="MetaMass")
-files1
-res3<-analyze.MSfile(MSfile=files1,Metadata=c("Christoforou"),output="res3")
+###################################################
+###example 2
+###################################################
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2acurves", markers = c(3:8))
+
+
+###################################################
+### example 3
+###################################################
+file2<-system.file("extdata","Data_Fig2a.txt",package="MetaMass")
+analyze.MSfile(MSfile = file2, overlap=2, output = "Fig2aUniGOoverlap", markers = 4)
+
+
+###################################################
+### example 4
+###################################################
+study4<-system.file("extdata","Carvalho.txt",package="MetaMass")
+analyze.MSfile(MSfile = study4, overlap=1, output = "study4", markers = 8)
+
+
+###################################################
+### example 5
+###################################################
+study4_9_10<-system.file("extdata",c("Carvalho.txt","Bileck.txt","Thakar.txt"),package="MetaMass")
+analyze.MSfile(MSfile = study4_9_10,  overlap=2, output = "study4910")
+
 }

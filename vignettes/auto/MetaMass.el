@@ -25,14 +25,13 @@
     "opt1"
     "opt2"
     "opt3"
-    "examp_s"
+    "opt4"
+    "opt5"
+    "Examps"
     "ex1"
     "ex2"
     "ex3"
     "ex4"
     "ex5"
-    "fig2"
-    "roc2"
-    "ex7"
     "fig4")))
 
