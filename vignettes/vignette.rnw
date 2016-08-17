@@ -177,5 +177,109 @@ c(”study4.txt”,”study9.txt”, ”study10.txt”) is used to merge data fr
 \noindent Result:\\
 The fractionation methods used in studies 4, 9 and 10 have limited resolution. However, combined they have high resolution. Thus, study 4 has high resolution of mitochondria, but poor separation of ER and nuclei. Study 9 has good separation of cytoplasmic organelles and nuclei, but no resolution of ER, mitochondria or cytosol. Study 9 has good resolution of cytosol, membranes and nuclei, but does not discriminate ER from mitochondria. When the datasets are combined, they complement each other.
 
+\subsection{Troubleshooting}
+The common challenge for new users of R is data import. The function
+\texttt{analyze.MSfile} expects tab-delimited file which could be
+read via function \texttt{read.table()}
+\scriptsize
+@
+<<eval=false>>=
+data_table<-read.table(filename,header=TRUE,sep="\t")
+@ %def
+\normalsize
+If there is an error concerning reading the input file, the user can
+try this function to check if the file is in correct format.
+The other possible issue is the grouping of the data columns. As
+mentioned above each contiguous sequence of numerical columns
+(flanked by non-numeric column) is considered as one group - the user
+can check if all (and only) the data he wants to analyze would be
+considered as MS data as follows
+\scriptsize
+@
+<<eval=false>>=
+colnames(data_table)[sapply(data.table,is.numeric)]
+@ %def
+\normalsize
+
+\subsection{Custom Annotation file}
+By default the marker sets in data.frame \texttt{AnnotationAM} are
+used however the user can provide a custom Annotation file which meets
+the following conventions
+
+\begin{itemize}
+  \item the file is tab-delimited (by default)
+  \item the first column contains the Uniprot IDs
+    \item the localizations identifiers must be empty string or syntactically valid
+      names (i.e. a string which consists of letters, numbers, and the dot and (for versions of R at least 1.9.0) underscore characters, and starts with either a letter or a dot not followed by a number. Reserved words are not syntactic names)
+  \end{itemize}
+  The localizations will be sorted in the following order
+  \scriptsize
+@
+<<>>=
+data(levelsC)
+levelsC
+@ %def
+\normalsize
+and the localizations not present in \texttt{levelsC} will be sorted
+  in lexicographical order after those present in \texttt{levelsC}.
+
+\subsection{Additional user-selectable variables}
+Number of groups in K-means clustering : The default option is 5
+proteins per cluster. The command clusters= 250 specifies 250 clusters.
+Comparison metrics: The default option is Euclidean distance. The
+command… metric =”correlation” specifies Pearson correlation (see \texttt{?analyze.MSfile}).
+\section{Analysis within R}
+Although the main purpose of this package is to create annotated lookup
+tables and heatmaps which can be conveniently analyzed outside R the
+results can be naturally treated as any R object.
+The function \texttt{analyze.MSfile} returns named list containing the
+original data, annotation(s) and cluster assignments. Two function
+can be used to extract it's contents - see \texttt{?get.data} and \texttt{?get.clusters}.
+\scriptsize
+@
+<<>>=
+file2<-system.file("extdata","Data_Fig_1b.txt",package="MetaMass")
+
+##cluster with respect MSfile only (cluster.metadata=FALSE by default)
+res2<-analyze.MSfile(MSfile=file2,Metadata=c("Christoforou"),output="res2",markers=c(3:5))
+data2<-get.data(res2,data.only=TRUE)
+cls2_1<-get.clusters(res2,rID=1) #rID=1 annotation with respect to markers[1]; default
+head(cls2_1)
+@ %def
+\normalsize
+Here we have extracted the data accompanied only by the protein ID and
+the cluster ID together with the analysis results with respect to the
+first marker set.
+As the the clusters in the \texttt{cls2\_1} \texttt{data.frame} are
+ordered by the cluster ID we can add any information to the data e.g.
+\scriptsize
+@
+<<>>=
+data2<-data.frame(data2,main_component1=cls2_1$main_component[data2$cluster])
+@ %def
+\normalsize
+
+\section{Number of clusters}
+It is obvious that the classification recall depends strongly on the
+number of clusters - the recall grows as the average cluster size
+decreases (with $100\%$ agreement with the annotation when each
+cluster contains just $1$ protein) however the number of unclassified
+proteins grows as well. To asses this fact we analyzed the data in
+examples 1-3 with different number of clusters (starting with average
+cluster size around $2000$ - the exact value depends on the size of
+dataset - and decreasing the size to $2$) - figure \ref{fig4}
+The solid red line (example 1) shows almost perfect reconstruction of
+classification with as much as $100$ proteins per cluster (left
+panel) and since in this example only annotated proteins were used no
+unclassified proteins. The results for the data in examples 2 and 3
+show consistently no loss of resolution for cluster size above $25$.
+
+\begin{figure}[h]
+\includegraphics{accvsclnb_all1.pdf}
+\caption{Performance against average cluster size}
+\label{fig4}
+\end{figure}
+
+
 
 \end{document}
