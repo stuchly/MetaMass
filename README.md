@@ -11,9 +11,9 @@ start R and install devtools: install.packages(“devtools”)
 
 load devtools: library(devtools)
 
-install AnnoMass: install_github("stuchly/MetaMass")
+install MetaMass: install_github("stuchly/MetaMass")
 
-load AnnoMass: library(MetaMass)
+load MetaMass: library(MetaMass)
 
 see vignette: vignette("MetaMass")
 
